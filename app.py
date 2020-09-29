@@ -15,38 +15,64 @@ CORS(app, resources={
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['CORS_ORIGINS'] = '*'
 # Use flask_pymongo to set up mongo connection
-app.config["MONGO_URI"] = "mongodb://localhost:27017/super_db"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
 
+superdb = mongo.db.supers
+
 # Or set inline
-# mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
+#mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
 
 #This is not recommended in production
-#What would happen is every time you visit the root route it would load the DB again with all the data
+# What would happen is every time you visit the root route it would load the DB again with all the data
 #
-#@app.route("/", methods=["GET"])
-# def index():
-#     # Define database and collection
-#     #super_db = client.super_db
-#     #supestats = super_db.supestats
+@app.route("/", methods=["GET"])
+def index():
 
-#     dogcollection = mongo.db.alldogs 
-#     response = requests.get("https://dog.ceo/api/breeds/list/all")
-#     # print(response.json())
-#     responseJson = response.json()
-#     dogcollection.insert(responseJson)
-#     # return render_template("index.html", mars=mars)
+    superheroes.supers.drop()
+    response = requests.get(
+        "https://akabab.github.io/superhero-api/api/all.json")
+    # print(response.json())
+    
+    responseJson = response.json()
+    superdb.insert_many(responseJson)
+    # return render_template("index.html", mars=mars)
 
 
-@app.route("/super_db/", methods=['GET'])
+@app.route("/allheroes/", methods=['GET'])
 @cross_origin()
-def allgenders():
-    superdb = mongo.db.super_db
+def allheroes():
+    #clear db if it exists
+    
     # mars_data = scrape_mars.scrape_all()
     # mars.update({}, mars_data, upsert=True)
-    allgenders = superdb.find({})
-    dogsjson = json.loads(json_util.dumps(alldogs))
-    return jsonify(dogsjson)
+    supers = superdb.find({})
+    supersjson = json.loads(json_util.dumps(supers))
+    return jsonify(supersjson)
+
+
+@app.route("/findhero/", methods=['GET'])
+@app.route("/gender/", methods=['GET'])
+def gender():
+
+    gendercount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$appearance.gender"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "-",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
+
+    gendersjson = json.loads(json_util.dumps(gendercount))
+    return jsonify(gendersjson)
 
 if __name__ == "__main__":
     app.run()
