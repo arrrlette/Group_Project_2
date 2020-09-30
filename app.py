@@ -18,8 +18,12 @@ app.config['CORS_ORIGINS'] = '*'
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
 
-superdb = mongo.db.supers
+#database
+superheroes = mongo.db
 
+#collection
+superdb = mongo.db.supers
+superheroes.superdb.drop()
 # Or set inline
 #mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
 
@@ -28,14 +32,14 @@ superdb = mongo.db.supers
 #
 @app.route("/", methods=["GET"])
 def index():
-
-    superheroes.supers.drop()
+    #drop collection before reloading
+    
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
     # print(response.json())
     
     responseJson = response.json()
-    superdb.insert_many(responseJson)
+    superdb.insert(responseJson)
     # return render_template("index.html", mars=mars)
 
 
