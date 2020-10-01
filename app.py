@@ -49,8 +49,6 @@ def index():
 def allheroes():
     #clear db if it exists
     
-    # mars_data = scrape_mars.scrape_all()
-    # mars.update({}, mars_data, upsert=True)
     supers = superdb.find({})
     supersjson = json.loads(json_util.dumps(supers))
     return jsonify(supersjson)

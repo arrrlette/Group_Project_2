@@ -17,15 +17,15 @@ d3.request("http://127.0.0.1:5000/").get(response => {
 
 
 
-function init(names) {
-    //select html for dashboard dropdown
+function init(names_list) {
+    //select html for character dropdown
     var dropDown = d3.select('#selDataset');
 
     //console.log(jsonData);
 
-    //add names to dashboard drop down
-    names.forEach((name) => {
-        dropDown.append('option').text(name).property('value', name);
+    //add names to character selection drop down
+    names_list.forEach((x) => {
+        dropDown.append('option').text(x).property('value', x);
     })
 
     //function to call initial display on html
