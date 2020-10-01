@@ -39,7 +39,8 @@ def index():
     # print(response.json())
     
     responseJson = response.json()
-    superdb.insert(responseJson)
+    superdb.insert(responseJson) 
+
     # return render_template("index.html", mars=mars)
 
 
@@ -48,14 +49,15 @@ def index():
 def allheroes():
     #clear db if it exists
     
-    # mars_data = scrape_mars.scrape_all()
-    # mars.update({}, mars_data, upsert=True)
     supers = superdb.find({})
     supersjson = json.loads(json_util.dumps(supers))
     return jsonify(supersjson)
 
 
+
 @app.route("/findhero/", methods=['GET'])
+
+
 @app.route("/gender/", methods=['GET'])
 def gender():
 
