@@ -17,15 +17,15 @@ d3.request("http://127.0.0.1:5000/").get(response => {
 
 
 
-function init(names_list) {
+function init(names) {
     //select html for character dropdown
     var dropDown = d3.select('#selDataset');
 
-    //console.log(jsonData);
+    // console.log(jsonData);
 
     //add names to character selection drop down
-    names_list.forEach((x) => {
-        dropDown.append('option').text(x).property('value', x);
+    names.forEach((name) => {
+        dropDown.append('option').text(name).property('value', name);
     })
 
     //function to call initial display on html
@@ -39,9 +39,9 @@ function genderPie() {
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
         // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
-        console.log(gender_data)
+        // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
-        console.log(gender_plot)
+        // console.log(gender_plot)
 
         //plotly code
         // // Part 5 - Working Pie Chart
@@ -59,15 +59,44 @@ function genderPie() {
 
         Plotly.newPlot("plot", data, layout);
     })
+
+    d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+    // console.log(JSON.parse(gender.response));
+        var hair_data = JSON.parse(hairColor.response)
+        console.log(hair_data)
+        hair_plot = Object.values(hair_data[0])
+        console.log(hair_plot)
+
+        //plotly code
+        // // Part 5 - Working Pie Chart
+        var trace1 = {
+            //labels: '',
+            values: hair_plot,
+            type: 'pie'
+        };
+
+        var data = [trace1];
+
+        var layout = {
+            title: "Hair Chart",
+        };
+
+        Plotly.newPlot("plot", data, layout);
+    })
+
+
+    
+
+    
 }
 
 function alignmentPie() {
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
         // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
-        console.log(gender_data)
+        // console.log(gender_data)
         gender_plot = Object.values(gender_data[0])
-        console.log(gender_plot)
+        // console.log(gender_plot)
 
         //plotly code
         // // Part 5 - Working Pie Chart
@@ -86,6 +115,8 @@ function alignmentPie() {
         Plotly.newPlot("plot", data, layout);
     })
 }
+
+
 
 function displayGraphs(graph) {
 
@@ -112,6 +143,61 @@ function characterChange(superhero) {
 function dashboardPowerStats(superhero) {
     const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
     console.log(hero)
+
+    d3.request("http://127.0.0.1:5000/gender").get(powerStats => {
+        // console.log(JSON.parse(gender.response));
+        var powerStats_data = JSON.parse(powerStats.response)
+        console.log(powerStats_data)
+        powerStats_plot = Object.values(powerStats_data[0])
+        // console.log(gender_plot)
+
+        //plotly code
+        // // Part 5 - Working Pie Chart
+        var trace1 = {
+            //labels: '',
+            values: gender_plot,
+            type: 'pie'
+        };
+
+        var data = [trace1];
+
+        var layout = {
+            title: "Alignment",
+        };
+
+        Plotly.newPlot("characterName", data, layout);
+    })
 }
 
 //=======================End Character section==========================
+
+
+
+
+
+
+
+// graphs
+// ----dashboard section----
+//     group 1 (xan)
+//     gender
+//     hair color
+//     eye color
+
+//     group 2 (anthony)
+//     alignment
+//     publisher
+//     primary stat
+
+
+
+
+// character selection section (arlette)
+//     image and name
+//     appearance
+//     biography
+//     work
+//     h bar graph for powerStats
+
+
+// battle (arlette/nathan)

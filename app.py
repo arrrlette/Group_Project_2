@@ -23,7 +23,7 @@ superheroes = mongo.db
 
 #collection
 superdb = mongo.db.supers
-superheroes.superdb.drop()
+# superheroes.superdb.drop()
 # Or set inline
 #mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
 
@@ -32,7 +32,7 @@ superheroes.superdb.drop()
 #
 @app.route("/", methods=["GET"])
 def index():
-    #drop collection before reloading
+    superdb.drop()
     
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
@@ -79,6 +79,7 @@ def gender():
 
     gendersjson = json.loads(json_util.dumps(gendercount))
     return jsonify(gendersjson)
+
 
 if __name__ == "__main__":
     app.run()
