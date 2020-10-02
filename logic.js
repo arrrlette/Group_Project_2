@@ -138,33 +138,35 @@ function characterChange(superhero) {
 };
 
 function dashboardPowerStats(superhero) {
-    // const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    // console.log(hero)
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    console.log(superStats)
 
-    d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
-        // console.log(JSON.parse(gender.response));
-        // var powerStats_data = JSON.parse(powerStats.response)
-        var powerStats_data = powerStats.response
-        console.log(powerStats_data)
+    // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
+    //     var powerStats_data = powerStats.response
+    //     console.log(powerStats_data)
 
-        
+    stats_keys = Object.keys(superStats)
+    console.log(stats_keys)
 
-        var trace1 = {
-            //labels: '',
-            type: 'bar',
-            // x: keys
-            // y: values
-            orientation: 'h'
-        };
+    stats_values = Object.values(superStats)
+    console.log(stats_values)
 
-        var data = [trace1];
+    var trace1 = {
+        //labels: '',
+        type: 'bar',
+        x: stats_values,
+        y: stats_keys,
+        orientation: 'h'
+    };
 
-        var layout = {
-            title: "PowerStats",
-        };
+    var data = [trace1];
 
-        Plotly.newPlot("powerStats", data, layout);
-    })
+    var layout = {
+        title: "PowerStats",
+    };
+
+    Plotly.newPlot("powerStats", data, layout);
+
 }
 
 
