@@ -14,6 +14,8 @@ CORS(app, resources={
 })
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['CORS_ORIGINS'] = '*'
+app.config['DEBUG'] = True 
+
 # Use flask_pymongo to set up mongo connection
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
@@ -79,6 +81,43 @@ def gender():
 
     gendersjson = json.loads(json_util.dumps(gendercount))
     return jsonify(gendersjson)
+
+
+@app.route("/hairColor/", methods=['GET'])
+def hairColor():
+    hairColorcount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$appearance.hairColor"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "-",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
+
+    hairColorjson = json.loads(json_util.dumps(hairColorcount))
+    return jsonify(hairColorjson)
+
+
+
+@app.route("/powerStats/<character>", methods=['GET'])
+def powerStats(character):
+
+    stats = superdb.find_one({"name": character})
+
+    #load the json
+    statsJSON = json.loads(json_util.dumps(stats)) 
+
+    powerStats = statsJSON["powerstats"]
+    return jsonify(powerStats)
+    
+
 
 
 if __name__ == "__main__":

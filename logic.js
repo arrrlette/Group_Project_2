@@ -31,6 +31,7 @@ function init(names) {
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
     characterChange(names[0]) //to display first character in array on init
+
 };
 
 
@@ -60,34 +61,30 @@ function genderPie() {
         Plotly.newPlot("plot", data, layout);
     })
 
-    d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    // console.log(JSON.parse(gender.response));
-        var hair_data = JSON.parse(hairColor.response)
-        console.log(hair_data)
-        hair_plot = Object.values(hair_data[0])
-        console.log(hair_plot)
+    // d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+    // // console.log(JSON.parse(gender.response));
+    //     var hair_data = JSON.parse(hairColor.response)
+    //     console.log(hair_data)
+    //     hair_plot = Object.values(hair_data[0])
+    //     console.log(hair_plot)
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace1 = {
-            //labels: '',
-            values: hair_plot,
-            type: 'pie'
-        };
+    //     //plotly code
+    //     // // Part 5 - Working Pie Chart
+    //     var trace1 = {
+    //         //labels: '',
+    //         values: hair_plot,
+    //         type: 'pie'
+    //     };
 
-        var data = [trace1];
+    //     var data = [trace1];
 
-        var layout = {
-            title: "Hair Chart",
-        };
+    //     var layout = {
+    //         title: "Hair Chart",
+    //     };
 
-        Plotly.newPlot("plot", data, layout);
-    })
+    //     Plotly.newPlot("plot", data, layout);
+    // })   
 
-
-    
-
-    
 }
 
 function alignmentPie() {
@@ -141,33 +138,36 @@ function characterChange(superhero) {
 };
 
 function dashboardPowerStats(superhero) {
-    const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    console.log(hero)
+    // const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    // console.log(hero)
 
-    d3.request("http://127.0.0.1:5000/gender").get(powerStats => {
+    d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
         // console.log(JSON.parse(gender.response));
-        var powerStats_data = JSON.parse(powerStats.response)
+        // var powerStats_data = JSON.parse(powerStats.response)
+        var powerStats_data = powerStats.response
         console.log(powerStats_data)
-        powerStats_plot = Object.values(powerStats_data[0])
-        // console.log(gender_plot)
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
+        
+
         var trace1 = {
             //labels: '',
-            values: gender_plot,
-            type: 'pie'
+            type: 'bar',
+            // x: keys
+            // y: values
+            orientation: 'h'
         };
 
         var data = [trace1];
 
         var layout = {
-            title: "Alignment",
+            title: "PowerStats",
         };
 
-        Plotly.newPlot("characterName", data, layout);
+        Plotly.newPlot("powerStats", data, layout);
     })
 }
+
+
 
 //=======================End Character section==========================
 
