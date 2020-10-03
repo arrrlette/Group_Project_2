@@ -1,2 +1,1 @@
-# Group_Project_2
-SuperHero Database
+# Group_Project2

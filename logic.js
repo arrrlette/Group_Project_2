@@ -26,6 +26,7 @@ function init(names) {
     //add names to character selection drop down
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);
+
     })
 
     //function to call initial display on html
@@ -39,11 +40,13 @@ function genderPie() {
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
         // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
+
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
 
         //plotly code for gender pie chart
+
         var trace1 = {
             //labels: '',
             values: gender_plot,
@@ -58,6 +61,7 @@ function genderPie() {
 
         Plotly.newPlot("plot", data, layout);
     })
+
 
     // d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
     //     // console.log(JSON.parse(gender.response));
@@ -193,6 +197,22 @@ function alignmentPie() {
 
         } else {
 
+}
+
+
+
+function displayGraphs(graph) {
+
+    if (graph === "gender") {
+        genderPie();
+    }
+
+    else if (graph === "alignment") {
+        alignmentPie();
+    }
+}
+
+
             bad_count++;
 
         }
@@ -220,7 +240,16 @@ function alignmentPie() {
         type: 'pie'
     };
 
-    var data = [trace1];
+
+//=========================Character section============================
+function characterChange(superhero) {
+
+
+    console.log(superhero)
+    dashboardPowerStats(superhero)
+    //add rest of functions for each section here
+};
+
 
     var layout = {
         title: "Primary Statistic",
@@ -343,3 +372,11 @@ function dashboardPowerStats(superhero) {
 
 
 // battle (arlette/nathan)
+=======
+function dashboardPowerStats(superhero) {
+    const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    console.log(hero)
+}
+
+//=======================End Character section==========================
+
