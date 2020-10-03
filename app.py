@@ -18,12 +18,12 @@ app.config['CORS_ORIGINS'] = '*'
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
 
-#database
+# database
 superheroes = mongo.db
 
-#collection
+# collection
 superdb = mongo.db.supers
-superheroes.superdb.drop()
+# superheroes.superdb.drop()
 # Or set inline
 #mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
 
@@ -32,24 +32,21 @@ superheroes.superdb.drop()
 #
 @app.route("/", methods=["GET"])
 def index():
-    #drop collection before reloading
-    
+    superdb.drop()
+
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
     # print(response.json())
-    
+
     responseJson = response.json()
     superdb.insert(responseJson)
-    # return render_template("index.html", mars=mars)
 
 
 @app.route("/allheroes/", methods=['GET'])
 @cross_origin()
 def allheroes():
-    #clear db if it exists
-    
-    # mars_data = scrape_mars.scrape_all()
-    # mars.update({}, mars_data, upsert=True)
+    # clear db if it exists
+
     supers = superdb.find({})
     supersjson = json.loads(json_util.dumps(supers))
     return jsonify(supersjson)
@@ -77,6 +74,38 @@ def gender():
 
     gendersjson = json.loads(json_util.dumps(gendercount))
     return jsonify(gendersjson)
+
+
+#@app.route("/alignment/", methods=['GET'])
+#def alignment():
+
+    # alignmentcount = list(superdb.aggregate([
+     #   {"$group": {
+     #       "_id": {"$toLower": "$biography.alignment"},
+     #       "count": {"$sum": 1}
+      #  }},
+      #  {"$group": {
+      #      "_id": "null",
+      #      "counts": {
+       #         "$push": {"k": "$_id", "v": "$count"}
+        #    }
+      #  }},
+      #  {"$replaceRoot": {
+      #      "newRoot": {"$arrayToObject": "$counts"}
+      #  }}
+    # ]))
+
+    #good_count = superheroes.superdb.find(
+        #{"biography.alignment": "good"}).count()
+    
+    #bad_count = superheroes.superdb.find(
+        #{"biography.alignment": "bad"}).count()
+    
+    #alignment_counts = [good_count, bad_count]
+
+    #alignmentjson = json.loads(json_util.dumps(alignment_counts))
+    #return jsonify(alignmentjson)
+
 
 if __name__ == "__main__":
     app.run()
