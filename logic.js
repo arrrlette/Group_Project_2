@@ -134,6 +134,7 @@ function characterChange(superhero) {
 
     console.log(superhero)
     dashboardPowerStats(superhero)
+    dashboardCharImage(superhero)
     //add rest of functions for each section here
 };
 
@@ -170,10 +171,19 @@ function dashboardPowerStats(superhero) {
 }
 
 
+function dashboardCharImage(superhero){
+    const charImages = superheroes.filter(x =>x.name === superhero)[0].images 
+    console.log(charImages);
+    
+    image = Object.values(charImages);
+    console.log(image[0]);
 
+    // var output = d3.select(".charImage");
+
+    d3.select(".charImage>img").attr("src", image[2]);
+
+}
 //=======================End Character section==========================
-
-
 
 
 
