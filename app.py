@@ -14,7 +14,9 @@ CORS(app, resources={
 })
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['CORS_ORIGINS'] = '*'
+
 app.config['DEBUG'] = True 
+
 
 # Use flask_pymongo to set up mongo connection
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
@@ -24,6 +26,7 @@ mongo = PyMongo(app)
 superheroes = mongo.db
 
 #collection
+
 superdb = mongo.db.supers
 # superheroes.superdb.drop()
 # Or set inline
@@ -35,11 +38,13 @@ superdb = mongo.db.supers
 @app.route("/", methods=["GET"])
 def index():
     superdb.drop()
+
     
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
     # print(response.json())
     
+
     responseJson = response.json()
     superdb.insert(responseJson) 
 
@@ -49,8 +54,7 @@ def index():
 @app.route("/allheroes/", methods=['GET'])
 @cross_origin()
 def allheroes():
-    #clear db if it exists
-    
+
     supers = superdb.find({})
     supersjson = json.loads(json_util.dumps(supers))
     return jsonify(supersjson)
@@ -117,6 +121,36 @@ def powerStats(character):
     powerStats = statsJSON["powerstats"]
     return jsonify(powerStats)
     
+
+#@app.route("/alignment/", methods=['GET'])
+#def alignment():
+
+    # alignmentcount = list(superdb.aggregate([
+     #   {"$group": {
+     #       "_id": {"$toLower": "$biography.alignment"},
+     #       "count": {"$sum": 1}
+      #  }},
+      #  {"$group": {
+      #      "_id": "null",
+      #      "counts": {
+       #         "$push": {"k": "$_id", "v": "$count"}
+        #    }
+      #  }},
+      #  {"$replaceRoot": {
+      #      "newRoot": {"$arrayToObject": "$counts"}
+      #  }}
+    # ]))
+
+    #good_count = superheroes.superdb.find(
+        #{"biography.alignment": "good"}).count()
+    
+    #bad_count = superheroes.superdb.find(
+        #{"biography.alignment": "bad"}).count()
+    
+    #alignment_counts = [good_count, bad_count]
+
+    #alignmentjson = json.loads(json_util.dumps(alignment_counts))
+    #return jsonify(alignmentjson)
 
 
 
