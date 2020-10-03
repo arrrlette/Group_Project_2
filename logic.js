@@ -16,7 +16,6 @@ d3.request("http://127.0.0.1:5000/").get(response => {
 })
 
 
-
 function init(names) {
     //select html for character dropdown
     var dropDown = d3.select('#selDataset');
@@ -46,9 +45,7 @@ function genderPie() {
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
 
-
         //plotly code for gender pie chart
-
         var trace1 = {
             //labels: '',
             values: gender_plot,
@@ -186,7 +183,7 @@ function alignmentPie() {
             strength_pics.push(image[0])
 
         }
-         console.log(stats)
+        console.log(stats)
         //console.log(combat)
         console.log(alignment_value)
 
@@ -194,30 +191,26 @@ function alignmentPie() {
         if (alignment == "g") {
 
             good_count++;
-          
+
 
         } else {
-           bad_count++;
+            bad_count++;
 
         }
+        //console logs for primary stat data
+        console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
+            power_count + "," + speed_count + "," + strength_count)
+        console.log(combat_list)
+        console.log(durability_list)
+        console.log(intelligence_list)
+        console.log(power_list)
+        console.log(speed_list)
+        console.log(strength_list)
+        console.log(combat_pics)
+        console.log(strength_pics)
+        console.log(good_count + "," + bad_count)
 
     });
-
-}
-      
-         //console logs for primary stat data
-    console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
-        power_count + "," + speed_count + "," + strength_count)
-    console.log(combat_list)
-    console.log(durability_list)
-    console.log(intelligence_list)
-    console.log(power_list)
-    console.log(speed_list)
-    console.log(strength_list)
-    console.log(combat_pics)
-    console.log(strength_pics)
-    console.log(good_count + "," + bad_count)
-
     //pie chart for primary stats
     var trace1 = {
         labels: ["Combat", "Durability", "Intelligence", "Power",
@@ -225,8 +218,8 @@ function alignmentPie() {
         values: [combat_count, durability_count, intelligence_count, power_count, speed_count, strength_count],
         type: 'pie'
     };
-//plot for primary stat
-  var data = [trace1];
+    //plot for primary stat
+    var data = [trace1];
     var layout = {
         title: "Primary Statistic",
     };
@@ -249,7 +242,8 @@ function alignmentPie() {
 
     Plotly.newPlot("plot2", data, layout);
 
-
+}
+//display graphs
 function displayGraphs(graph) {
 
     if (graph === "gender") {
@@ -263,61 +257,44 @@ function displayGraphs(graph) {
 
 //========================End Dashboard section=========================
 
-           
-
-
-
 
 //=========================Character section============================
 function characterChange(superhero) {
 
-
     console.log(superhero)
     dashboardPowerStats(superhero)
     dashboardCharImage(superhero)
-    //add rest of functions for each section here
 };
 
+//PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
     console.log(superStats)
-
     // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
     //     var powerStats_data = powerStats.response
     //     console.log(powerStats_data)
-
     stats_keys = Object.keys(superStats)
     console.log(stats_keys)
-
     stats_values = Object.values(superStats)
     console.log(stats_values)
-
     var trace1 = {
         //labels: '',
         type: 'bar',
         x: stats_values,
         y: stats_keys,
         orientation: 'h'
-
     };
-
     var data = [trace1];
-
     var layout = {
-      
-
         title: "PowerStats",
     };
-
     Plotly.newPlot("powerStats", data, layout);
-
 }
-
-
-function dashboardCharImage(superhero){
-    const charImages = superheroes.filter(x =>x.name === superhero)[0].images 
+//image creation
+function dashboardCharImage(superhero) {
+    const charImages = superheroes.filter(x => x.name === superhero)[0].images
     console.log(charImages);
-    
+
     image = Object.values(charImages);
     console.log(image[0]);
 
@@ -326,69 +303,3 @@ function dashboardCharImage(superhero){
     d3.select(".charImage>img").attr("src", image[2]);
 
 }
-
-
-//=========================Character section============================
-function characterChange(superhero) {
-
-    console.log(superhero)
-    dashboardPowerStats(superhero)
-    //add rest of functions for each section here
-};
-
-function dashboardPowerStats(superhero) {
-    const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    console.log(hero)
-
-    d3.request("http://127.0.0.1:5000/gender").get(powerStats => {
-        // console.log(JSON.parse(gender.response));
-        var powerStats_data = JSON.parse(powerStats.response)
-        console.log(powerStats_data)
-        powerStats_plot = Object.values(powerStats_data[0])
-        // console.log(gender_plot)
-
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace1 = {
-            //labels: '',
-            values: gender_plot,
-            type: 'pie'
-        };
-
-        var data = [trace1];
-
-        var layout = {
-            title: "Alignment",
-        };
-
-        Plotly.newPlot("characterName", data, layout);
-    })
-}
-
-
-//=======================End Character section==========================
-
-
-// graphs
-// ----dashboard section----
-//     group 1 (xan)
-//     gender
-//     hair color
-//     eye color
-
-//     group 2 (anthony)
-//     alignment
-//     publisher
-//     primary stat
-
-
-
-
-// character selection section (arlette)
-//     image and name
-//     appearance
-//     biography
-//     work
-//     h bar graph for powerStats
-
-
