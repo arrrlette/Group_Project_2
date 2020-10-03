@@ -32,6 +32,7 @@ function init(names) {
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
     characterChange(names[0]) //to display first character in array on init
+
 };
 
 
@@ -44,6 +45,7 @@ function genderPie() {
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
+
 
         //plotly code for gender pie chart
 
@@ -64,7 +66,8 @@ function genderPie() {
 
 
     // d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    //     // console.log(JSON.parse(gender.response));
+    // // console.log(JSON.parse(gender.response));
+
     //     var hair_data = JSON.parse(hairColor.response)
     //     console.log(hair_data)
     //     hair_plot = Object.values(hair_data[0])
@@ -85,15 +88,14 @@ function genderPie() {
     //     };
 
     //     Plotly.newPlot("plot", data, layout);
-    // })
 
-
-
+    // })   
 
 
 }
 
 function alignmentPie() {
+
 
     console.log(superheroes)
 
@@ -184,9 +186,7 @@ function alignmentPie() {
             strength_pics.push(image[0])
 
         }
-
-
-        console.log(stats)
+         console.log(stats)
         //console.log(combat)
         console.log(alignment_value)
 
@@ -194,32 +194,18 @@ function alignmentPie() {
         if (alignment == "g") {
 
             good_count++;
+          
 
         } else {
-
-}
-
-
-
-function displayGraphs(graph) {
-
-    if (graph === "gender") {
-        genderPie();
-    }
-
-    else if (graph === "alignment") {
-        alignmentPie();
-    }
-}
-
-
-            bad_count++;
+           bad_count++;
 
         }
 
     });
 
-    //console logs for primary stat data
+}
+      
+         //console logs for primary stat data
     console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
         power_count + "," + speed_count + "," + strength_count)
     console.log(combat_list)
@@ -239,31 +225,12 @@ function displayGraphs(graph) {
         values: [combat_count, durability_count, intelligence_count, power_count, speed_count, strength_count],
         type: 'pie'
     };
-
-
-//=========================Character section============================
-function characterChange(superhero) {
-
-
-    console.log(superhero)
-    dashboardPowerStats(superhero)
-    //add rest of functions for each section here
-};
-
-
+//plot for primary stat
+  var data = [trace1];
     var layout = {
         title: "Primary Statistic",
     };
-
     Plotly.newPlot("plot", data, layout);
-
-    //code for alignment pie chart
-    // d3.request("http://127.0.0.1:5000/alignment").get(alignment => {
-    //     //console.log(JSON.parse(alignment.response));
-    //     var alignment_data = JSON.parse(alignment.response)
-    //     console.log(gender_data)
-    //     alignment_plot = Object.values(alignment_data[0])
-    //     console.log(gender_plot)
 
 
 
@@ -283,12 +250,6 @@ function characterChange(superhero) {
     Plotly.newPlot("plot2", data, layout);
 
 
-
-
-
-};
-
-
 function displayGraphs(graph) {
 
     if (graph === "gender") {
@@ -299,8 +260,72 @@ function displayGraphs(graph) {
         alignmentPie();
     }
 }
+
 //========================End Dashboard section=========================
 
+           
+
+
+
+
+//=========================Character section============================
+function characterChange(superhero) {
+
+
+    console.log(superhero)
+    dashboardPowerStats(superhero)
+    dashboardCharImage(superhero)
+    //add rest of functions for each section here
+};
+
+function dashboardPowerStats(superhero) {
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    console.log(superStats)
+
+    // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
+    //     var powerStats_data = powerStats.response
+    //     console.log(powerStats_data)
+
+    stats_keys = Object.keys(superStats)
+    console.log(stats_keys)
+
+    stats_values = Object.values(superStats)
+    console.log(stats_values)
+
+    var trace1 = {
+        //labels: '',
+        type: 'bar',
+        x: stats_values,
+        y: stats_keys,
+        orientation: 'h'
+
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      
+
+        title: "PowerStats",
+    };
+
+    Plotly.newPlot("powerStats", data, layout);
+
+}
+
+
+function dashboardCharImage(superhero){
+    const charImages = superheroes.filter(x =>x.name === superhero)[0].images 
+    console.log(charImages);
+    
+    image = Object.values(charImages);
+    console.log(image[0]);
+
+    // var output = d3.select(".charImage");
+
+    d3.select(".charImage>img").attr("src", image[2]);
+
+}
 
 
 //=========================Character section============================
@@ -340,12 +365,8 @@ function dashboardPowerStats(superhero) {
     })
 }
 
+
 //=======================End Character section==========================
-
-
-
-
-
 
 
 // graphs
@@ -370,13 +391,4 @@ function dashboardPowerStats(superhero) {
 //     work
 //     h bar graph for powerStats
 
-
-// battle (arlette/nathan)
-=======
-function dashboardPowerStats(superhero) {
-    const hero = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    console.log(hero)
-}
-
-//=======================End Character section==========================
 

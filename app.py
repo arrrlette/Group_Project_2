@@ -14,14 +14,19 @@ CORS(app, resources={
 })
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['CORS_ORIGINS'] = '*'
+
+app.config['DEBUG'] = True 
+
+
 # Use flask_pymongo to set up mongo connection
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
 
-# database
+#database
 superheroes = mongo.db
 
-# collection
+#collection
+
 superdb = mongo.db.supers
 # superheroes.superdb.drop()
 # Or set inline
@@ -34,9 +39,11 @@ superdb = mongo.db.supers
 def index():
     superdb.drop()
 
+    
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
     # print(response.json())
+    
 
     responseJson = response.json()
     superdb.insert(responseJson) 
@@ -80,6 +87,41 @@ def gender():
     return jsonify(gendersjson)
 
 
+@app.route("/hairColor/", methods=['GET'])
+def hairColor():
+    hairColorcount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$appearance.hairColor"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "-",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
+
+    hairColorjson = json.loads(json_util.dumps(hairColorcount))
+    return jsonify(hairColorjson)
+
+
+
+@app.route("/powerStats/<character>", methods=['GET'])
+def powerStats(character):
+
+    stats = superdb.find_one({"name": character})
+
+    #load the json
+    statsJSON = json.loads(json_util.dumps(stats)) 
+
+    powerStats = statsJSON["powerstats"]
+    return jsonify(powerStats)
+    
+
 #@app.route("/alignment/", methods=['GET'])
 #def alignment():
 
@@ -109,6 +151,7 @@ def gender():
 
     #alignmentjson = json.loads(json_util.dumps(alignment_counts))
     #return jsonify(alignmentjson)
+
 
 
 if __name__ == "__main__":
