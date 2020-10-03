@@ -1,4 +1,5 @@
 
+
 let superheroes;  //let lets us change the value. used for the character selection section
 
 //hit home route first, then run all heroes
@@ -44,10 +45,12 @@ function genderPie() {
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
+        //capture labels for gender pie
+        gender_keys = Object.keys(gender_data[0])
 
         //plotly code for gender pie chart
         var trace1 = {
-            //labels: '',
+            labels: gender_keys,
             values: gender_plot,
             type: 'pie'
         };
@@ -55,39 +58,71 @@ function genderPie() {
         var data = [trace1];
 
         var layout = {
-            title: "Gender Chart",
+            title: "Gender",
         };
 
         Plotly.newPlot("plot", data, layout);
     })
 
 
-    // d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    // // console.log(JSON.parse(gender.response));
+    d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+    //console.log(JSON.parse(hairColor.response));
 
-    //     var hair_data = JSON.parse(hairColor.response)
-    //     console.log(hair_data)
-    //     hair_plot = Object.values(hair_data[0])
-    //     console.log(hair_plot)
+        var hair_data = JSON.parse(hairColor.response)
+        //console.log(hair_data)
+        hair_plot = Object.values(hair_data[0])
+        //console.log(hair_plot)
+        //capture labels for pie chart
+        hair_keys = Object.keys(hair_data[0])
 
-    //     //plotly code
-    //     // // Part 5 - Working Pie Chart
-    //     var trace1 = {
-    //         //labels: '',
-    //         values: hair_plot,
-    //         type: 'pie'
-    //     };
+        console.log(hair_keys)
 
-    //     var data = [trace1];
+        //plotly code
+        // // Part 5 - Working Pie Chart
+        var trace2 = {
+            labels: hair_keys,
+            values: hair_plot,
+            type: 'pie'
+        };
 
-    //     var layout = {
-    //         title: "Hair Chart",
-    //     };
+        var data = [trace2];
 
-    //     Plotly.newPlot("plot", data, layout);
+        var layout = {
+            title: "Hair Color",
+            showlegend: true,
+            legend: {"orientation": "h"}
+        };
 
-    // })   
+        Plotly.newPlot("plot2", data, layout);
 
+    })   
+    d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
+    //console.log(JSON.parse(eyeColor.response));
+
+        var eye_data = JSON.parse(eyeColor.response)
+        //console.log(eye_data)
+        eye_plot = Object.values(eye_data[0])
+        //console.log(eye_plot)
+        //eye color keys for plot
+        eye_keys = Object.keys(eye_data[0])
+
+        //plotly code
+        // // Part 5 - Working Pie Chart
+        var trace3 = {
+            labels: eye_keys,
+            values: eye_plot,
+            type: 'pie'
+        };
+
+        var data = [trace3];
+
+        var layout = {
+            title: "Eye Color",
+        };
+
+        Plotly.newPlot("plot3", data, layout);
+
+    })
 
 }
 
@@ -183,9 +218,9 @@ function alignmentPie() {
             strength_pics.push(image[0])
 
         }
-        console.log(stats)
+        //console.log(stats)
         //console.log(combat)
-        console.log(alignment_value)
+        //console.log(alignment_value)
 
         //fill alignment values for pie chart
         if (alignment == "g") {
@@ -198,17 +233,17 @@ function alignmentPie() {
 
         }
         //console logs for primary stat data
-        console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
-            power_count + "," + speed_count + "," + strength_count)
-        console.log(combat_list)
-        console.log(durability_list)
-        console.log(intelligence_list)
-        console.log(power_list)
-        console.log(speed_list)
-        console.log(strength_list)
-        console.log(combat_pics)
-        console.log(strength_pics)
-        console.log(good_count + "," + bad_count)
+        // console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
+        //     power_count + "," + speed_count + "," + strength_count)
+        // console.log(combat_list)
+        // console.log(durability_list)
+        // console.log(intelligence_list)
+        // console.log(power_list)
+        // console.log(speed_list)
+        // console.log(strength_list)
+        // console.log(combat_pics)
+        // console.log(strength_pics)
+        // console.log(good_count + "," + bad_count)
 
     });
     //pie chart for primary stats
@@ -261,15 +296,18 @@ function displayGraphs(graph) {
 //=========================Character section============================
 function characterChange(superhero) {
 
-    console.log(superhero)
+    //console.log(superhero)
     dashboardPowerStats(superhero)
     dashboardCharImage(superhero)
+    dashboardApp(superhero);
+    biography(superhero);
+    work(superhero);
 };
 
 //PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    console.log(superStats)
+    //console.log(superStats)
     // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
     //     var powerStats_data = powerStats.response
     //     console.log(powerStats_data)
@@ -293,13 +331,58 @@ function dashboardPowerStats(superhero) {
 //image creation
 function dashboardCharImage(superhero) {
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
-    console.log(charImages);
+    //console.log(charImages);
 
     image = Object.values(charImages);
-    console.log(image[0]);
+    //console.log(image[0]);
 
     // var output = d3.select(".charImage");
 
     d3.select(".charImage>img").attr("src", image[2]);
 
+}
+
+function dashboardApp(superhero) {
+ 
+    const superApp = superheroes.filter(x => x.name === superhero)[0].appearance;
+ 
+    //select html
+    var appHTML = d3.select("#superApp");
+ 
+    //to only show current data called
+    appHTML.html("")
+ 
+    //appends each key and value in the metaData to the html
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+ 
+}
+ 
+function biography(superhero) {
+ 
+    const biography = superheroes.filter(x => x.name === superhero)[0].biography;
+ 
+    //select html
+    var bioHTML = d3.select("#biography");
+ 
+    //to only show current data called
+    bioHTML.html("")
+ 
+    //appends each key and value in the metaData to the html
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+ 
+}
+ 
+function work(superhero) {
+ 
+    const work = superheroes.filter(x => x.name === superhero)[0].work;
+ 
+    //select html
+    var workHTML = d3.select("#work");
+ 
+    //to only show current data called
+    workHTML.html("")
+ 
+    //appends each key and value in the metaData to the html
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+ 
 }
