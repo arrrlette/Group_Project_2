@@ -24,10 +24,7 @@ function init(names) {
     //add names to character selection drop down
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);    
-    })
-
-
-
+    });
     // --------------BATTLE SECTION-----------------------
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
@@ -35,7 +32,7 @@ function init(names) {
     //add names to first character dropdown in battle section
     names.forEach((name) => {
         battleDropdowns.append('option').text(name).property('value', name);    
-    })
+    });
 
 
     //select html for second character dropdown in battle section
@@ -44,16 +41,15 @@ function init(names) {
     //add names second character dropdown in battle section
     names.forEach((name) => {
         battleDropdowns.append('option').text(name).property('value', name);    
-    })
+    });
 
     // -----------END BATTLE SECTION-------------------------
 
-
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
-    characterChange(names[0]) //to display first character in array on init
-    battleChange(names[0])
-
+    characterChange(names[0]); //to display first character in array on init
+    battleChange(names[0]);
+    battleChange2(names[0]);
 };
 
 
@@ -309,9 +305,10 @@ function characterChange(superhero) {
 };
 
 function battleChange(superhero){
-
-    battleImages(superhero);
-
+    battleImages1(superhero);
+};
+function battleChange2(superhero){
+    battleImages2(superhero);
 };
 
 //PowerStats function
@@ -412,19 +409,26 @@ function work(superhero) {
     Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
-
-
-function battleImages(superhero){
+  
+function battleImages1(superhero){
 
     //battle section characters
 
-    const battleImages = superheroes.filter(x => x.name === superhero)[0].images
+    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
     
 
     battleImage1 = Object.values(battleImages);
-    d3.select(".battleImage1>img").attr("src", image[1]);
-
+    d3.select(".image1>img").attr("src", battleImage1[1]);
+    console.log(battleImage1)
     //battle section characters
-    battleImage2 = Object.values(battleImages);
-    d3.select(".battleImage2>img").attr("src", image[1]);
+    
+}
+
+function battleImages2(superhero){
+    var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
+
+    battleImage2 = Object.values(battleImages2);
+    d3.select(".image2>img").attr("src", battleImage2[1]);
+    console.log(battleImage2)
+
 }
