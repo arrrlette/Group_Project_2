@@ -108,7 +108,26 @@ def hairColor():
     hairColorjson = json.loads(json_util.dumps(hairColorcount))
     return jsonify(hairColorjson)
 
+@app.route("/eyeColor/", methods=['GET'])
+def eyeColor():
+    eyeColorcount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$appearance.eyeColor"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "-",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
 
+    eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
+    return jsonify(eyeColorjson)
 
 @app.route("/powerStats/<character>", methods=['GET'])
 def powerStats(character):
