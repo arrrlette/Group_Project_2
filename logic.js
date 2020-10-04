@@ -25,9 +25,6 @@ function init(names) {
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);    
     });
-
-
-
     // --------------BATTLE SECTION-----------------------
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
@@ -48,13 +45,11 @@ function init(names) {
 
     // -----------END BATTLE SECTION-------------------------
 
-
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
     characterChange(names[0]); //to display first character in array on init
     battleChange(names[0]);
     battleChange2(names[0]);
-
 };
 
 
@@ -381,7 +376,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
 
@@ -396,7 +391,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
 
@@ -411,16 +406,15 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
-
-
+  
 function battleImages1(superhero){
 
     //battle section characters
 
-    var battleImages = superheroes.filter(x => x.name === superhero)[0].images;
+    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
     
 
     battleImage1 = Object.values(battleImages);
