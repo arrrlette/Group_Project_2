@@ -37,10 +37,9 @@ function init(names) {
 
 //========================Dashboard section============================
 function genderPie() {
+    //Gender Data Query from app.py logic into dictionary and build Pie Chart
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
-        // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
-
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
@@ -53,80 +52,72 @@ function genderPie() {
             values: gender_plot,
             type: 'pie'
         };
-
         var data = [trace1];
-
         var layout = {
             title: "Gender",
-        };
-
-        Plotly.newPlot("plot", data, layout);
-    })
-
-
-    d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    //console.log(JSON.parse(hairColor.response));
-
-        var hair_data = JSON.parse(hairColor.response)
-        //console.log(hair_data)
-        hair_plot = Object.values(hair_data[0])
-        //console.log(hair_plot)
-        //capture labels for pie chart
-        hair_keys = Object.keys(hair_data[0])
-
-        console.log(hair_keys)
-
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace2 = {
-            labels: hair_keys,
-            values: hair_plot,
-            type: 'pie'
-        };
-
-        var data = [trace2];
-
-        var layout = {
-            title: "Hair Color",
             showlegend: true,
             legend: {"orientation": "h"}
         };
+        Plotly.newPlot("plot", data, layout);
+    })
 
+    //Hair Color Query from app.py logic into dictionary and build Pie Chart  
+    d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+        var hair_data = JSON.parse(hairColor.response)
+        //sort descending
+        hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        //console.log(hair_data)
+        hair_plot = Object.values(hair_data[0])
+        var top_10_hair = hair_plot.slice(0,10)
+        //take the first 15 results
+        console.log(top_10_hair)
+        //capture labels for pie chart
+        hair_keys = Object.keys(hair_data[0])
+        console.log(hair_keys)
+
+        //plotly code - Hair Color Comparison
+        var trace2 = {
+            labels: hair_keys,
+            values: top_10_hair,
+            type: 'pie'
+        };
+        var data = [trace2];
+        var layout = {
+            title: "Top 10 Most Common Hero Hair Color",
+            showlegend: true,
+            legend: {"orientation": "h"}
+        };
         Plotly.newPlot("plot2", data, layout);
-
-    })   
+    }) 
+    //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
-    //console.log(JSON.parse(eyeColor.response));
-
         var eye_data = JSON.parse(eyeColor.response)
-        //console.log(eye_data)
+        //sort descending
+        eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        //console.log(hair_data)
         eye_plot = Object.values(eye_data[0])
-        //console.log(eye_plot)
+        var top_10_eyes = eye_plot.slice(0,10)
+        console.log(top_10_eyes)
         //eye color keys for plot
         eye_keys = Object.keys(eye_data[0])
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
+        //plotly code - Eye Color Comparison
         var trace3 = {
             labels: eye_keys,
-            values: eye_plot,
+            values: top_10_eyes,
             type: 'pie'
         };
-
         var data = [trace3];
-
         var layout = {
-            title: "Eye Color",
+            title: "Top 10 Most Common Hero Eye Color",
+            showlegend: true,
+            legend: {"orientation": "h"}
         };
-
         Plotly.newPlot("plot3", data, layout);
-
     })
-
 }
 
 function alignmentPie() {
-
 
     console.log(superheroes)
 
@@ -153,7 +144,6 @@ function alignmentPie() {
 
     var good_count = 0;
     var bad_count = 0;
-
 
     superheroes.forEach(hero => {
 
@@ -226,10 +216,8 @@ function alignmentPie() {
 
             good_count++;
 
-
         } else {
             bad_count++;
-
         }
         //console logs for primary stat data
         // console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
@@ -243,7 +231,6 @@ function alignmentPie() {
         // console.log(combat_pics)
         // console.log(strength_pics)
         // console.log(good_count + "," + bad_count)
-
     });
     //pie chart for primary stats
     var trace1 = {
@@ -259,8 +246,6 @@ function alignmentPie() {
     };
     Plotly.newPlot("plot", data, layout);
 
-
-
     //plotly code for alignment pie chart
     var trace1 = {
         labels: ['Hero', 'Villian'],
@@ -269,13 +254,11 @@ function alignmentPie() {
     };
 
     var data = [trace1];
-
     var layout = {
         title: "Alignment Chart",
     };
 
     Plotly.newPlot("plot2", data, layout);
-
 }
 //display graphs
 function displayGraphs(graph) {
@@ -288,7 +271,6 @@ function displayGraphs(graph) {
         alignmentPie();
     }
 }
-
 //========================End Dashboard section=========================
 
 
@@ -328,12 +310,9 @@ function dashboardPowerStats(superhero) {
 function dashboardCharImage(superhero) {
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
     //console.log(charImages);
-
     image = Object.values(charImages);
     //console.log(image[0]);
-
     // var output = d3.select(".charImage");
 
     d3.select(".charImage>img").attr("src", image[2]);
-
 }
