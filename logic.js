@@ -23,13 +23,36 @@ function init(names) {
 
     //add names to character selection drop down
     names.forEach((name) => {
-        dropDown.append('option').text(name).property('value', name);
-
+        dropDown.append('option').text(name).property('value', name);    
     })
+
+
+
+    // --------------BATTLE SECTION-----------------------
+    //select html for first character dropdown in battle section
+    var battleDropdowns = d3.select('#selDataset2');
+
+    //add names to first character dropdown in battle section
+    names.forEach((name) => {
+        battleDropdowns.append('option').text(name).property('value', name);    
+    })
+
+
+    //select html for second character dropdown in battle section
+    var battleDropdowns = d3.select('#selDataset3');
+
+    //add names second character dropdown in battle section
+    names.forEach((name) => {
+        battleDropdowns.append('option').text(name).property('value', name);    
+    })
+
+    // -----------END BATTLE SECTION-------------------------
+
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
     characterChange(names[0]) //to display first character in array on init
+    battleChange(names[0])
 
 };
 
@@ -302,6 +325,11 @@ function characterChange(superhero) {
     work(superhero);
 };
 
+function battleChange(superhero){
+
+    battleImages(superhero);
+};
+
 //PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
@@ -353,10 +381,7 @@ function dashboardCharImage(superhero) {
     image = Object.values(charImages);
     //console.log(image[0]);
 
-    // var output = d3.select(".charImage");
-
     d3.select(".charImage>img").attr("src", image[2]);
-
 }
 
 function dashboardApp(superhero) {
@@ -401,5 +426,22 @@ function work(superhero) {
 
     //appends each key and value in the metaData to the html
     Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+
+}
+
+
+function battleImages(superhero){
+
+    //battle section characters
+
+    const battleImages = superheroes.filter(x => x.name === superhero)[0].images
+    
+
+    battleImage1 = Object.values(battleImages);
+    d3.select(".battleImage1>img").attr("src", image[1]);
+
+    //battle section characters
+    battleImage2 = Object.values(battleImages);
+    d3.select(".battleImage2>img").attr("src", image[1]);
 
 }
