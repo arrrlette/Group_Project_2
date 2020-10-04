@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, redirect, url_for, Response, jsonify
 from bson import json_util
 from flask_pymongo import PyMongo
@@ -15,17 +16,17 @@ CORS(app, resources={
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['CORS_ORIGINS'] = '*'
 
-app.config['DEBUG'] = True 
+app.config['DEBUG'] = True
 
 
 # Use flask_pymongo to set up mongo connection
 app.config["MONGO_URI"] = "mongodb://localhost:27017/superheroes"
 mongo = PyMongo(app)
 
-#database
+# database
 superheroes = mongo.db
 
-#collection
+# collection
 
 superdb = mongo.db.supers
 # superheroes.superdb.drop()
@@ -39,14 +40,12 @@ superdb = mongo.db.supers
 def index():
     superdb.drop()
 
-    
     response = requests.get(
         "https://akabab.github.io/superhero-api/api/all.json")
     # print(response.json())
-    
 
     responseJson = response.json()
-    superdb.insert(responseJson) 
+    superdb.insert(responseJson)
 
     # return render_template("index.html", mars=mars)
 
@@ -60,10 +59,7 @@ def allheroes():
     return jsonify(supersjson)
 
 
-
 @app.route("/findhero/", methods=['GET'])
-
-
 @app.route("/gender/", methods=['GET'])
 def gender():
 
@@ -109,49 +105,69 @@ def hairColor():
     return jsonify(hairColorjson)
 
 
+@app.route("/eyeColor/", methods=['GET'])
+def eyeColor():
+    eyeColorcount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$appearance.eyeColor"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "-",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
+
+    eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
+    return jsonify(eyeColorjson)
+
 
 @app.route("/powerStats/<character>", methods=['GET'])
 def powerStats(character):
 
     stats = superdb.find_one({"name": character})
 
-    #load the json
-    statsJSON = json.loads(json_util.dumps(stats)) 
+    # load the json
+    statsJSON = json.loads(json_util.dumps(stats))
 
     powerStats = statsJSON["powerstats"]
     return jsonify(powerStats)
-    
 
-#@app.route("/alignment/", methods=['GET'])
-#def alignment():
+
+# @app.route("/alignment/", methods=['GET'])
+# def alignment():
 
     # alignmentcount = list(superdb.aggregate([
-     #   {"$group": {
-     #       "_id": {"$toLower": "$biography.alignment"},
-     #       "count": {"$sum": 1}
-      #  }},
-      #  {"$group": {
-      #      "_id": "null",
-      #      "counts": {
-       #         "$push": {"k": "$_id", "v": "$count"}
-        #    }
-      #  }},
-      #  {"$replaceRoot": {
-      #      "newRoot": {"$arrayToObject": "$counts"}
-      #  }}
+    #   {"$group": {
+    #       "_id": {"$toLower": "$biography.alignment"},
+    #       "count": {"$sum": 1}
+    #  }},
+    #  {"$group": {
+    #      "_id": "null",
+    #      "counts": {
+    #         "$push": {"k": "$_id", "v": "$count"}
+    #    }
+    #  }},
+    #  {"$replaceRoot": {
+    #      "newRoot": {"$arrayToObject": "$counts"}
+    #  }}
     # ]))
 
-    #good_count = superheroes.superdb.find(
-        #{"biography.alignment": "good"}).count()
-    
-    #bad_count = superheroes.superdb.find(
-        #{"biography.alignment": "bad"}).count()
-    
+    # good_count = superheroes.superdb.find(
+    # {"biography.alignment": "good"}).count()
+
+    # bad_count = superheroes.superdb.find(
+    # {"biography.alignment": "bad"}).count()
+
     #alignment_counts = [good_count, bad_count]
 
     #alignmentjson = json.loads(json_util.dumps(alignment_counts))
-    #return jsonify(alignmentjson)
-
+    # return jsonify(alignmentjson)
 
 
 if __name__ == "__main__":
