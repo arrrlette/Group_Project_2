@@ -1,4 +1,3 @@
-
 let superheroes;  //let lets us change the value. used for the character selection section
 
 //hit home route first, then run all heroes
@@ -24,13 +23,36 @@ function init(names) {
 
     //add names to character selection drop down
     names.forEach((name) => {
-        dropDown.append('option').text(name).property('value', name);
-
+        dropDown.append('option').text(name).property('value', name);    
     })
+
+
+
+    // --------------BATTLE SECTION-----------------------
+    //select html for first character dropdown in battle section
+    var battleDropdowns = d3.select('#selDataset2');
+
+    //add names to first character dropdown in battle section
+    names.forEach((name) => {
+        battleDropdowns.append('option').text(name).property('value', name);    
+    })
+
+
+    //select html for second character dropdown in battle section
+    var battleDropdowns = d3.select('#selDataset3');
+
+    //add names second character dropdown in battle section
+    names.forEach((name) => {
+        battleDropdowns.append('option').text(name).property('value', name);    
+    })
+
+    // -----------END BATTLE SECTION-------------------------
+
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
     characterChange(names[0]) //to display first character in array on init
+    battleChange(names[0])
 
 };
 
@@ -231,6 +253,7 @@ function alignmentPie() {
         // console.log(combat_pics)
         // console.log(strength_pics)
         // console.log(good_count + "," + bad_count)
+
     });
     //pie chart for primary stats
     var trace1 = {
@@ -278,8 +301,17 @@ function displayGraphs(graph) {
 function characterChange(superhero) {
 
     //console.log(superhero)
-    dashboardPowerStats(superhero)
-    dashboardCharImage(superhero)
+    dashboardPowerStats(superhero);
+    dashboardCharImage(superhero);
+    dashboardApp(superhero);
+    biography(superhero);
+    work(superhero);
+};
+
+function battleChange(superhero){
+
+    battleImages(superhero);
+
 };
 
 //PowerStats function
@@ -293,16 +325,35 @@ function dashboardPowerStats(superhero) {
     console.log(stats_keys)
     stats_values = Object.values(superStats)
     console.log(stats_values)
+
+
+    // markerColor = '';
+    // if(stats_values > 75){
+    //     markerColor = 'Red';   
+    // } else {
+    //     markerColor = "Orange";
+    // }
+    
+
     var trace1 = {
         //labels: '',
         type: 'bar',
         x: stats_values,
         y: stats_keys,
-        orientation: 'h'
+        orientation: 'h',
+        // marker: {
+        //     color: markerColor,
+        // }
     };
     var data = [trace1];
+
+
+
     var layout = {
         title: "PowerStats",
+        xaxis:{
+            range: [1,100],
+        }
     };
     Plotly.newPlot("powerStats", data, layout);
 }
@@ -310,9 +361,70 @@ function dashboardPowerStats(superhero) {
 function dashboardCharImage(superhero) {
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
     //console.log(charImages);
+
     image = Object.values(charImages);
     //console.log(image[0]);
-    // var output = d3.select(".charImage");
 
     d3.select(".charImage>img").attr("src", image[2]);
+}
+
+function dashboardApp(superhero) {
+
+    const superApp = superheroes.filter(x => x.name === superhero)[0].appearance;
+
+    //select html
+    var appHTML = d3.select("#superApp");
+
+    //to only show current data called
+    appHTML.html("")
+
+    //appends each key and value in the metaData to the html
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+
+}
+
+function biography(superhero) {
+
+    const biography = superheroes.filter(x => x.name === superhero)[0].biography;
+
+    //select html
+    var bioHTML = d3.select("#biography");
+
+    //to only show current data called
+    bioHTML.html("")
+
+    //appends each key and value in the metaData to the html
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+
+}
+
+function work(superhero) {
+
+    const work = superheroes.filter(x => x.name === superhero)[0].work;
+
+    //select html
+    var workHTML = d3.select("#work");
+
+    //to only show current data called
+    workHTML.html("")
+
+    //appends each key and value in the metaData to the html
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+
+}
+
+
+function battleImages(superhero){
+
+    //battle section characters
+
+    const battleImages = superheroes.filter(x => x.name === superhero)[0].images
+    
+
+    battleImage1 = Object.values(battleImages);
+    d3.select(".battleImage1>img").attr("src", image[1]);
+
+    //battle section characters
+    battleImage2 = Object.values(battleImages);
+    d3.select(".battleImage2>img").attr("src", image[1]);
 }

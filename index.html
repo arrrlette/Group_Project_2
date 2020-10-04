@@ -41,7 +41,6 @@
   * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
-
   * Please note that the template used from Bootstrapmade has been drastically altered. It was used as a starting template.
   ======================================================== -->
 </head>
@@ -209,78 +208,98 @@
             </div>
         </div>
 
-      <div clas="row">
-        <div class="col-md-12">
-          <div id="characterName"></div>
+      
+        <div class="row">
+          <div class="col-md-4">     
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Appearance</h3>
+              </div>
+              <div id="superApp" class="panel-body"></div>
+            </div>
+          </div>        
+
+          <div class="col-md-4">     
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Biography</h3>
+              </div>
+              <div id="biography" class="panel-body"></div>
+            </div>
+          </div>
+          
+          
+          <div class="col-md-4">     
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Work</h3>
+              </div>
+              <div id="work" class="panel-body"></div>
+            </div>
+          </div>   
+
         </div>
-      </div>
 
       </div>
 
-      </div>
+
     </section><!-- End Portfolio Section -->
 
     <!-- ======= About/battle Section ======= -->
     <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
-
+      <div class="container" data-aos="fade-up" >
+        <!--Fighter/Battle Section title-->
         <div class="section-title">
           <h2>Battle</h2>
-          <p>Pick your characters: </p>
+          <p>Pick your fighters:</p>
+          <hr>
+          <a href="#" class="btn-learn-more">Begin Fight!</a>
+        </div>
+        <!--Row for Character Selections-->
+        <div class="row">
+          <div class="col-4">
+            <div class="well">
+              <h5>Characters:</h5>
+              <select id="selDataset2" onchange="battleChange(this.value)"></select>
+            </div>
+          </div>
+          <div class="col-2">
+          </div>
+          <div class="col-4 justify-content-center">
+            <div class="well">
+              <h5>Characters:</h5>
+              <select id="selDataset3" onchange="battleChange(this.value)"></select>
+            </div>
+          </div>
         </div>
 
+        <!--Row for bringing in character images-->
 
-        <div class="row icon-boxes">
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
-            data-aos-delay="200">
-            <div class="icon-box">
-
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button class="dropdown-item" type="button">Action</button>
-                  <button class="dropdown-item" type="button">Another action</button>
-                  <button class="dropdown-item" type="button">Something else here</button>
-                </div>
-              </div>
-
-              <img src="assets/img/characters/batman.jpg" class="img-fluid" alt="">
-              <h4 class="title"><a href="">hero/villain pic</a></h4>
-              <p class="description">maybe display stats?</p>
-              <img src="assets/img/characters/char_sel_power_stats_placeholder.png" class="img-fluid" alt="">
+        <div class="row">
+          <div class="col-4">
+            <div class="battleImage1">
+              <img src="">
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in"
-            data-aos-delay="300">
-            <div class="icon-box">
+          <div class="col-2">
+            <img src="assets/img/characters/comic-vs-versus-1.png" class="img-fluid" alt="">
+          </div>
 
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button class="dropdown-item" type="button">Action</button>
-                  <button class="dropdown-item" type="button">Another action</button>
-                  <button class="dropdown-item" type="button">Something else here</button>
-                </div>
-              </div>
-              <img src="assets/img/characters/joker.jpg" class="img-fluid" alt="">
-              <h4 class="title"><a href="">hero/villain pic</a></h4>
-              <p class="description">maybe display stats?</p>
-              <img src="assets/img/characters/char_sel_power_stats_placeholder.png" class="img-fluid" alt="">
+          <div class="col-4">
+            <div class="battleImage2">
+              <img src="">
             </div>
           </div>
 
+
+
+
+
         </div>
-        <a href="#" class="btn-learn-more">Begin Fight!</a>
+
+
       </div>
-
       </div>
     </section><!-- End About Section -->
 
