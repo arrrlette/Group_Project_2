@@ -66,7 +66,7 @@ function genderPie() {
 
 
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    //console.log(JSON.parse(hairColor.response));
+        //console.log(JSON.parse(hairColor.response));
 
         var hair_data = JSON.parse(hairColor.response)
         //console.log(hair_data)
@@ -90,14 +90,14 @@ function genderPie() {
         var layout = {
             title: "Hair Color",
             showlegend: true,
-            legend: {"orientation": "h"}
+            legend: { "orientation": "h" }
         };
 
         Plotly.newPlot("plot2", data, layout);
 
-    })   
+    })
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
-    //console.log(JSON.parse(eyeColor.response));
+        //console.log(JSON.parse(eyeColor.response));
 
         var eye_data = JSON.parse(eyeColor.response)
         //console.log(eye_data)
@@ -327,6 +327,8 @@ function dashboardPowerStats(superhero) {
         title: "PowerStats",
     };
     Plotly.newPlot("powerStats", data, layout);
+
+
 }
 //image creation
 function dashboardCharImage(superhero) {
@@ -343,46 +345,48 @@ function dashboardCharImage(superhero) {
 }
 
 function dashboardApp(superhero) {
- 
+
     const superApp = superheroes.filter(x => x.name === superhero)[0].appearance;
- 
+
     //select html
     var appHTML = d3.select("#superApp");
- 
+
     //to only show current data called
     appHTML.html("")
- 
+
     //appends each key and value in the metaData to the html
     Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
- 
+
 }
- 
+
 function biography(superhero) {
- 
+
     const biography = superheroes.filter(x => x.name === superhero)[0].biography;
- 
+
     //select html
     var bioHTML = d3.select("#biography");
- 
+
     //to only show current data called
     bioHTML.html("")
- 
+
     //appends each key and value in the metaData to the html
     Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
- 
+
 }
- 
+
 function work(superhero) {
- 
+
     const work = superheroes.filter(x => x.name === superhero)[0].work;
- 
+
     //select html
     var workHTML = d3.select("#work");
- 
+
     //to only show current data called
     workHTML.html("")
- 
+
     //appends each key and value in the metaData to the html
     Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
- 
+
 }
+var roundLogEl = document.querySelector('.round-log');
+
