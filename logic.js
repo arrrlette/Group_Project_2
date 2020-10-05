@@ -77,6 +77,8 @@ function battleChange2(superhero){
     battleImages2(superhero);
 };
 
+
+
 function battleImages1(superhero){
 
     const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
@@ -86,6 +88,9 @@ function battleImages1(superhero){
     // console.log(image1[1])
 
 }
+
+
+
 
 function battleImages2(superhero){
 
