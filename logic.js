@@ -7,15 +7,18 @@ let superheroes;  //let lets us change the value. used for the character selecti
 d3.request("http://127.0.0.1:5000/").get(response => {
     d3.request("http://127.0.0.1:5000/allheroes").get(response => {
         const names = JSON.parse(response.response).map(x => x.name)
-        console.log(JSON.parse(response.response));
-        console.log(names);
+        // console.log(JSON.parse(response.response));
+        // console.log(names);
         superheroes = JSON.parse(response.response) //for building out the superhero, will let us now have to do a d3 request each time
         init(names);
     })
 })
 
 
+
 function init(names) {
+
+    //---------------------- CHARACTER INIT SECTION--------------------
     //select html for character dropdown
     var dropDown = d3.select('#selDataset');
 
@@ -24,15 +27,20 @@ function init(names) {
     //add names to character selection drop down
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);    
-    });
-    // --------------BATTLE SECTION-----------------------
+    })
+
+    //---------------------- END CHARACTER INIT SECTION--------------------
+
+
+
+    // -----------------------BATTLE INIT SECTION--------------------------
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
     //add names to first character dropdown in battle section
     names.forEach((name) => {
         battleDropdowns.append('option').text(name).property('value', name);    
-    });
+    })
 
 
     //select html for second character dropdown in battle section
@@ -41,23 +49,67 @@ function init(names) {
     //add names second character dropdown in battle section
     names.forEach((name) => {
         battleDropdowns.append('option').text(name).property('value', name);    
-    });
+    })
 
-    // -----------END BATTLE SECTION-------------------------
+    // --------------------END BATTLE INIT SECTION-------------------------
+
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
-    characterChange(names[0]); //to display first character in array on init
-    battleChange(names[0]);
-    battleChange2(names[0]);
+    characterChange(names[0]) //to display first character in array on init
+    battleChange1(names[0])
+    battleChange2(names[0])
+
 };
 
 
+
+//========================Battle section============================
+
+
+function battleChange1(superhero){
+
+    battleImages1(superhero);
+};
+
+function battleChange2(superhero){
+
+    battleImages2(superhero);
+};
+
+function battleImages1(superhero){
+
+    const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
+
+    image1 = Object.values(battleImages1);
+    d3.select(".image1>img").attr("src", image1[1]);
+    // console.log(image1[1])
+
+}
+
+function battleImages2(superhero){
+
+    const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
+
+    image2 = Object.values(battleImages2);
+    d3.select(".image2>img").attr("src", image2[1]);
+    // console.log(image2[1])
+}
+
+// JavaScript popup window function
+function popup(url) {
+    popupWindow = window.open(url,'popUpWindow','height=800,width=1000,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
+        }
+
+
+//========================End Battle section============================
+
 //========================Dashboard section============================
 function genderPie() {
-    //Gender Data Query from app.py logic into dictionary and build Pie Chart
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
+        // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
+
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
@@ -70,72 +122,80 @@ function genderPie() {
             values: gender_plot,
             type: 'pie'
         };
+
         var data = [trace1];
+
         var layout = {
             title: "Gender",
-            showlegend: true,
-            legend: {"orientation": "h"}
         };
+
         Plotly.newPlot("plot", data, layout);
     })
 
-    //Hair Color Query from app.py logic into dictionary and build Pie Chart  
+
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+    //console.log(JSON.parse(hairColor.response));
+
         var hair_data = JSON.parse(hairColor.response)
-        //sort descending
-        hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
         //console.log(hair_data)
         hair_plot = Object.values(hair_data[0])
-        var top_10_hair = hair_plot.slice(0,10)
-        //take the first 15 results
-        console.log(top_10_hair)
+        //console.log(hair_plot)
         //capture labels for pie chart
         hair_keys = Object.keys(hair_data[0])
+
         console.log(hair_keys)
 
-        //plotly code - Hair Color Comparison
+        //plotly code
+        // // Part 5 - Working Pie Chart
         var trace2 = {
             labels: hair_keys,
-            values: top_10_hair,
+            values: hair_plot,
             type: 'pie'
         };
+
         var data = [trace2];
+
         var layout = {
-            title: "Top 10 Most Common Hero Hair Color",
+            title: "Hair Color",
             showlegend: true,
             legend: {"orientation": "h"}
         };
+
         Plotly.newPlot("plot2", data, layout);
-    }) 
-    //Eye Color Query from app.py logic into dictionary and build Pie Chart  
+
+    })   
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
+    //console.log(JSON.parse(eyeColor.response));
+
         var eye_data = JSON.parse(eyeColor.response)
-        //sort descending
-        eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
-        //console.log(hair_data)
+        //console.log(eye_data)
         eye_plot = Object.values(eye_data[0])
-        var top_10_eyes = eye_plot.slice(0,10)
-        console.log(top_10_eyes)
+        //console.log(eye_plot)
         //eye color keys for plot
         eye_keys = Object.keys(eye_data[0])
 
-        //plotly code - Eye Color Comparison
+        //plotly code
+        // // Part 5 - Working Pie Chart
         var trace3 = {
             labels: eye_keys,
-            values: top_10_eyes,
+            values: eye_plot,
             type: 'pie'
         };
+
         var data = [trace3];
+
         var layout = {
-            title: "Top 10 Most Common Hero Eye Color",
-            showlegend: true,
-            legend: {"orientation": "h"}
+            title: "Eye Color",
         };
+
         Plotly.newPlot("plot3", data, layout);
+
     })
+
 }
 
 function alignmentPie() {
+
 
     console.log(superheroes)
 
@@ -162,6 +222,7 @@ function alignmentPie() {
 
     var good_count = 0;
     var bad_count = 0;
+
 
     superheroes.forEach(hero => {
 
@@ -234,8 +295,10 @@ function alignmentPie() {
 
             good_count++;
 
+
         } else {
             bad_count++;
+
         }
         //console logs for primary stat data
         // console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
@@ -265,6 +328,8 @@ function alignmentPie() {
     };
     Plotly.newPlot("plot", data, layout);
 
+
+
     //plotly code for alignment pie chart
     var trace1 = {
         labels: ['Hero', 'Villian'],
@@ -273,11 +338,13 @@ function alignmentPie() {
     };
 
     var data = [trace1];
+
     var layout = {
         title: "Alignment Chart",
     };
 
     Plotly.newPlot("plot2", data, layout);
+
 }
 //display graphs
 function displayGraphs(graph) {
@@ -290,6 +357,7 @@ function displayGraphs(graph) {
         alignmentPie();
     }
 }
+
 //========================End Dashboard section=========================
 
 
@@ -304,12 +372,6 @@ function characterChange(superhero) {
     work(superhero);
 };
 
-function battleChange(superhero){
-    battleImages1(superhero);
-};
-function battleChange2(superhero){
-    battleImages2(superhero);
-};
 
 //PowerStats function
 function dashboardPowerStats(superhero) {
@@ -330,7 +392,7 @@ function dashboardPowerStats(superhero) {
     // } else {
     //     markerColor = "Orange";
     // }
-    
+
 
     var trace1 = {
         //labels: '',
@@ -376,7 +438,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -391,7 +453,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -406,29 +468,6 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
-
-}
-  
-function battleImages1(superhero){
-
-    //battle section characters
-
-    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
-    
-
-    battleImage1 = Object.values(battleImages);
-    d3.select(".image1>img").attr("src", battleImage1[1]);
-    console.log(battleImage1)
-    //battle section characters
-    
-}
-
-function battleImages2(superhero){
-    var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
-
-    battleImage2 = Object.values(battleImages2);
-    d3.select(".image2>img").attr("src", battleImage2[1]);
-    console.log(battleImage2)
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
 
 }
