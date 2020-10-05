@@ -400,6 +400,8 @@ function dashboardPowerStats(superhero) {
         x: stats_values,
         y: stats_keys,
         orientation: 'h',
+        text:stats_values.map(String),
+        textposition: 'auto'
         // marker: {
         //     color: markerColor,
         // }
@@ -416,7 +418,8 @@ function dashboardPowerStats(superhero) {
     };
     Plotly.newPlot("powerStats", data, layout);
 }
-//image creation
+
+
 function dashboardCharImage(superhero) {
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
     //console.log(charImages);
