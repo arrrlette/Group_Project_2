@@ -91,67 +91,71 @@ function genderPie() {
     //console.log(JSON.parse(hairColor.response));
 
         var hair_data = JSON.parse(hairColor.response)
-        //console.log(hair_data)
-        hair_plot = Object.values(hair_data[0])
-        var top_10_hair = hair_plot.slice(0,10)
+        //sort descending
+        console.log(hair_data)
+        hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        console.log(hair_data)
+        // hair_plot = Object.values(hair_data[0])
+        // var top_10_hair = hair_plot.slice(0,10)
 
-        //take the first 15 results
-        console.log(top_10_hair)
-        //capture labels for pie chart
-        hair_keys = Object.keys(hair_data[0])
+        // //take the first 15 results
+        // console.log(top_10_hair)
+        // //capture labels for pie chart
+        // hair_keys = Object.keys(hair_data[0])
 
-        console.log(hair_keys)
+        // console.log(hair_keys)
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace2 = {
-            labels: hair_keys,
-            values: hair_plot,
-            type: 'pie'
-        };
+        // //plotly code
+        // // // Part 5 - Working Pie Chart
+        // var trace2 = {
+        //     labels: hair_keys,
+        //     values: hair_plot,
+        //     type: 'pie'
+        // };
 
-        var data = [trace2];
+        // var data = [trace2];
 
-        var layout = {
-            title: "Hair Color",
-            showlegend: true,
-            legend: { "orientation": "h" }
-        };
+        // var layout = {
+        //     title: "Hair Color",
+        //     showlegend: true,
+        //     legend: { "orientation": "h" }
+        // };
 
-        Plotly.newPlot("plot2", data, layout);
+        // Plotly.newPlot("plot2", data, layout);
     })
     //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
     //console.log(JSON.parse(eyeColor.response));
 
         var eye_data = JSON.parse(eyeColor.response)
+        console.log(eye_data);
         //sort descending
         eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
         console.log(eye_data)
-        eye_plot = Object.values(eye_data[0])
-        var top_10_eyes = eye_plot.slice(0, 10)
-        console.log(top_10_eyes)
-        //eye color keys for plot
-        eye_keys = Object.keys(eye_data[0])
-        console.log(eye_keys)
+        // eye_plot = Object.values(eye_data[0])
+        // var top_10_eyes = eye_plot.slice(0, 10)
+        // console.log(top_10_eyes)
+        // //eye color keys for plot
+        // eye_keys = Object.keys(eye_data[0])
+        // console.log(eye_keys)
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace3 = {
-            labels: eye_keys,
-            values: eye_plot,
-            type: 'pie'
-        };
+        // //plotly code
+        // // // Part 5 - Working Pie Chart
+        // var trace3 = {
+        //     labels: eye_keys,
+        //     values: eye_plot,
+        //     type: 'pie'
+        // };
 
-        var data = [trace3];
+        // var data = [trace3];
 
-        var layout = {
-            title: "Top 10 Most Common Hero Eye Color",
-            showlegend: true,
-            legend: { "orientation": "h" }
-        };
+        // var layout = {
+        //     title: "Top 10 Most Common Hero Eye Color",
+        //     showlegend: true,
+        //     legend: { "orientation": "h" }
+        // };
 
-        Plotly.newPlot("plot3", data, layout);
+        // Plotly.newPlot("plot3", data, layout);
 
     })
 
