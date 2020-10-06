@@ -83,7 +83,6 @@ function battleChange2(superhero){
     calcStats(superhero);
     player2 = calcStats(superhero);
     console.log(player2);
-    battleWinner();
 };
 
 function battleWinner(){
