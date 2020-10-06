@@ -199,7 +199,7 @@
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-3">
-            <div class="charImage" style="padding-top:20px;">
+            <div class="charImage" style="position:absolute; top: 25%">
               <img src="">
             </div>
           </div>
@@ -253,14 +253,17 @@
           <h2>Battle</h2>
           <p>Pick your fighters:</p>
           <hr>
-          <a href="#" class="btn-learn-more">Begin Fight!</a>
+          
+          <a href="battle.html" class = "btn-learn-more" onclick="popup(this.href);return false">Begin Fight!</a>
+
         </div>
         <!--Row for Character Selections-->
         <div class="row">
+          <div class ="col-1"></div>
           <div class="col-4">
             <div class="well">
               <h5>Characters:</h5>
-              <select id="selDataset2" onchange="battleChange(this.value)"></select>
+              <select id="selDataset2" onchange="battleChange1(this.value)"></select>
             </div>
           </div>
           <div class="col-2">
@@ -275,9 +278,14 @@
 
         <!--Row for bringing in character images-->
 
+
+
         <div class="row">
+
+          <div class ="col-1"></div>
+
           <div class="col-4">
-            <div class="image1">
+            <div class="image1" style="position:relative; left: 5%" >
               <img src="">
             </div>
           </div>
@@ -287,15 +295,10 @@
           </div>
 
           <div class="col-4">
-            <div class="image2">
+            <div class="image2" style="position:relative; left: 5%">
               <img src="">
             </div>
           </div>
-
-
-
-
-
         </div>
 
 
@@ -308,7 +311,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>The Team</h2>
+          <h2>Team</h2>
           <p>They traversed their universes for countless decades, wandering, looking for those with equal powers. Out
             of nowhere a cosmic rift opened up and four heroes met. Some say this space-time rift was caused by Project
             Two...others think it was the Brockwell Stone. <br>
@@ -322,7 +325,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/team/arlette_flames.jpg" class="img-fluid" alt="">
+                <img src="assets/img/characters/arlette.jpeg" class="img-fluid" alt="">
 
               </div>
               <div class="member-info">
@@ -335,11 +338,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/team/English.jpg" class="img-fluid" alt="">
+                <img src="assets/img/characters/Anthony.jpeg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
                 <h4>Anthony English</h4>
-                <span>Product Manager</span>
+                <span>Zombie Leader</span>
               </div>
             </div>
           </div>
@@ -347,11 +350,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/characters/joker.jpg" class="img-fluid" alt="">
+                <img src="assets/img/characters/Alexandra.jpeg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
-                <h4>The Joker</h4>
-                <span>CFO</span>
+                <h4>Mushroom</h4>
+                <span>Bathroom Renovator</span>
               </div>
             </div>
           </div>
@@ -359,11 +362,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
+                <img src="assets/img/characters/nathan.jpeg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Accountant</span>
+                <h4>Nathan Bolt</h4>
+                <span>Clumsy Intern</span>
               </div>
             </div>
           </div>
@@ -396,7 +399,6 @@
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
 
-
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -419,3 +421,4 @@
 </body>
 
 </html>
+
