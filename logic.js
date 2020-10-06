@@ -60,6 +60,7 @@ function init(names) {
     battleChange1(names[0])
     battleChange2(names[0])
 
+
 };
 
 
@@ -70,11 +71,39 @@ function init(names) {
 function battleChange1(superhero){
 
     battleImages1(superhero);
+    // calcStats(superhero);
+    player1 = calcStats(superhero);
+    console.log(player1)
+    
 };
 
 function battleChange2(superhero){
 
     battleImages2(superhero);
+    calcStats(superhero);
+    player2 = calcStats(superhero);
+    console.log(player2);
+    battleWinner();
+};
+
+function battleWinner(){
+
+    var winner;
+
+    if(player1 > player2){
+        winner = "Player1 Wins";
+    }
+
+    else if(player1 < player2){
+        winner = "Player2 Wins"
+    }
+    
+    else{winner = "Tie"}
+    
+
+    console.log(winner)
+    return winner;
+
 };
 
 
@@ -84,11 +113,10 @@ function battleImages1(superhero){
     const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
 
     image1 = Object.values(battleImages1);
-    d3.select(".image1>img").attr("src", image1[1]);
+    d3.selectAll(".image1>img").attr("src", image1[1]);
     // console.log(image1[1])
 
 }
-
 
 
 
@@ -97,14 +125,40 @@ function battleImages2(superhero){
     const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
 
     image2 = Object.values(battleImages2);
-    d3.select(".image2>img").attr("src", image2[1]);
+    d3.selectAll(".image2>img").attr("src", image2[1]);
     // console.log(image2[1])
 }
 
 // JavaScript popup window function
 function popup(url) {
     popupWindow = window.open(url,'popUpWindow','height=800,width=1000,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-        }
+}
+
+
+
+function calcStats(superhero){
+
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+
+    stats_values = Object.values(superStats)
+    // console.log(stats_values)
+    
+    // totalStats = 0;
+
+    //getting sum of numbers
+    sumStats = stats_values.reduce(function(a,b){
+        return a + b;
+    },0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
+
+    // console.log(sumStats)
+
+    return sumStats;
+
+}
+
+
+
+
 
 
 //========================End Battle section============================
