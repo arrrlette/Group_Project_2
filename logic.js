@@ -23,6 +23,7 @@ function init(names) {
 
     //add names to character selection drop down
     names.forEach((name) => {
+
         dropDown.append('option').text(name).property('value', name);
     });
     // --------------BATTLE SECTION-----------------------
@@ -74,7 +75,7 @@ function genderPie() {
         var layout = {
             title: "Gender",
             showlegend: true,
-            legend: { "orientation": "h" }
+            legend: {"orientation": "h"}
         };
         Plotly.newPlot("plot", data, layout);
     })
@@ -86,7 +87,8 @@ function genderPie() {
         hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
         //console.log(hair_data)
         hair_plot = Object.values(hair_data[0])
-        var top_10_hair = hair_plot.slice(0, 10)
+        var top_10_hair = hair_plot.slice(0,10)
+
         //take the first 15 results
         console.log(top_10_hair)
         //capture labels for pie chart
@@ -498,7 +500,6 @@ function alignmentPie() {
 
 //myTableDiv.appendChild(table);
 
-
 //display graphs
 function displayGraphs(graph) {
 
@@ -543,14 +544,13 @@ function dashboardPowerStats(superhero) {
     stats_values = Object.values(superStats)
     console.log(stats_values)
 
-
     // markerColor = '';
     // if(stats_values > 75){
     //     markerColor = 'Red';   
     // } else {
     //     markerColor = "Orange";
     // }
-
+    
 
     var trace1 = {
         //labels: '',
@@ -568,8 +568,8 @@ function dashboardPowerStats(superhero) {
 
     var layout = {
         title: "PowerStats",
-        xaxis: {
-            range: [1, 100],
+        xaxis:{
+            range: [1,100],
         }
     };
     Plotly.newPlot("powerStats", data, layout);
@@ -629,24 +629,23 @@ function work(superhero) {
     Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
-
-function battleImages1(superhero) {
+  
+function battleImages1(superhero){
 
     //battle section characters
 
     const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
-
+    
 
     battleImage1 = Object.values(battleImages);
     d3.select(".image1>img").attr("src", battleImage1[1]);
     console.log(battleImage1)
     //battle section characters
-
+    
 }
 
-function battleImages2(superhero) {
+function battleImages2(superhero){
     var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
-
     battleImage2 = Object.values(battleImages2);
     d3.select(".image2>img").attr("src", battleImage2[1]);
     console.log(battleImage2)

@@ -105,7 +105,6 @@ def universe():
     universejson = json.loads(json_util.dumps(universecount))
     return jsonify(universejson)
 
-
 @app.route("/hairColor/", methods=['GET'])
 def hairColor():
     hairColorcount = list(superdb.aggregate([
@@ -127,7 +126,6 @@ def hairColor():
     hairColorjson = json.loads(json_util.dumps(hairColorcount))
     return jsonify(hairColorjson)
 
-
 @app.route("/eyeColor/", methods=['GET'])
 def eyeColor():
     eyeColorcount = list(superdb.aggregate([
@@ -147,7 +145,6 @@ def eyeColor():
     ]))
     eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
     return jsonify(eyeColorjson)
-
 
 @app.route("/powerStats/<character>", methods=['GET'])
 def powerStats(character):
