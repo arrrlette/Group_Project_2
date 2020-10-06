@@ -27,6 +27,7 @@ function init(names) {
     //add names to character selection drop down
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);    
+<<<<<<< HEAD
     })
 
     //---------------------- END CHARACTER INIT SECTION--------------------
@@ -34,6 +35,10 @@ function init(names) {
 
 
     // -----------------------BATTLE INIT SECTION--------------------------
+=======
+    });
+    // --------------BATTLE SECTION-----------------------
+>>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
@@ -53,13 +58,18 @@ function init(names) {
 
     // --------------------END BATTLE INIT SECTION-------------------------
 
-
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
+<<<<<<< HEAD
     characterChange(names[0]) //to display first character in array on init
     battleChange1(names[0])
     battleChange2(names[0])
 
+=======
+    characterChange(names[0]); //to display first character in array on init
+    battleChange(names[0]);
+    battleChange2(names[0]);
+>>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
 };
 
 
@@ -446,7 +456,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
 
@@ -461,7 +471,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
 }
 
@@ -476,6 +486,32 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
 
+<<<<<<< HEAD
+=======
+}
+  
+function battleImages1(superhero){
+
+    //battle section characters
+
+    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
+    
+
+    battleImage1 = Object.values(battleImages);
+    d3.select(".image1>img").attr("src", battleImage1[1]);
+    console.log(battleImage1)
+    //battle section characters
+    
+}
+
+function battleImages2(superhero){
+    var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
+
+    battleImage2 = Object.values(battleImages2);
+    d3.select(".image2>img").attr("src", battleImage2[1]);
+    console.log(battleImage2)
+
+>>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
 }
