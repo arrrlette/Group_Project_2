@@ -7,15 +7,18 @@ let superheroes;  //let lets us change the value. used for the character selecti
 d3.request("http://127.0.0.1:5000/").get(response => {
     d3.request("http://127.0.0.1:5000/allheroes").get(response => {
         const names = JSON.parse(response.response).map(x => x.name)
-        console.log(JSON.parse(response.response));
-        console.log(names);
+        // console.log(JSON.parse(response.response));
+        // console.log(names);
         superheroes = JSON.parse(response.response) //for building out the superhero, will let us now have to do a d3 request each time
         init(names);
     })
 })
 
 
+
 function init(names) {
+
+    //---------------------- CHARACTER INIT SECTION--------------------
     //select html for character dropdown
     var dropDown = d3.select('#selDataset');
 
@@ -23,10 +26,9 @@ function init(names) {
 
     //add names to character selection drop down
     names.forEach((name) => {
-
         dropDown.append('option').text(name).property('value', name);
     });
-    // --------------BATTLE SECTION-----------------------
+
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
@@ -41,24 +43,27 @@ function init(names) {
 
     //add names second character dropdown in battle section
     names.forEach((name) => {
+    // --------------------END BATTLE INIT SECTION-------------------------
         battleDropdowns.append('option').text(name).property('value', name);
     });
 
-    // -----------END BATTLE SECTION-------------------------
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
-    characterChange(names[0]); //to display first character in array on init
-    battleChange(names[0]);
-    battleChange2(names[0]);
+    characterChange(names[0]) //to display first character in array on init
+    battleChange1(names[0])
+    battleChange2(names[0])
+
 };
+
 
 
 //========================Dashboard section============================
 function genderPie() {
-    //Gender Data Query from app.py logic into dictionary and build Pie Chart
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
+        // console.log(JSON.parse(gender.response));
         var gender_data = JSON.parse(gender.response)
+
         // console.log(gender_data) 
         gender_plot = Object.values(gender_data[0])
         // console.log(gender_plot)
@@ -71,20 +76,21 @@ function genderPie() {
             values: gender_plot,
             type: 'pie'
         };
+
         var data = [trace1];
+
         var layout = {
             title: "Gender",
-            showlegend: true,
-            legend: {"orientation": "h"}
         };
+
         Plotly.newPlot("plot", data, layout);
     })
 
-    //Hair Color Query from app.py logic into dictionary and build Pie Chart  
+
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
+    //console.log(JSON.parse(hairColor.response));
+
         var hair_data = JSON.parse(hairColor.response)
-        //sort descending
-        hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
         //console.log(hair_data)
         hair_plot = Object.values(hair_data[0])
         var top_10_hair = hair_plot.slice(0,10)
@@ -93,24 +99,31 @@ function genderPie() {
         console.log(top_10_hair)
         //capture labels for pie chart
         hair_keys = Object.keys(hair_data[0])
+
         console.log(hair_keys)
 
-        //plotly code - Hair Color Comparison
+        //plotly code
+        // // Part 5 - Working Pie Chart
         var trace2 = {
             labels: hair_keys,
-            values: top_10_hair,
+            values: hair_plot,
             type: 'pie'
         };
+
         var data = [trace2];
+
         var layout = {
-            title: "Top 10 Most Common Hero Hair Color",
+            title: "Hair Color",
             showlegend: true,
             legend: { "orientation": "h" }
         };
+
         Plotly.newPlot("plot2", data, layout);
     })
     //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
+    //console.log(JSON.parse(eyeColor.response));
+
         var eye_data = JSON.parse(eyeColor.response)
         //sort descending
         eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
@@ -122,23 +135,30 @@ function genderPie() {
         eye_keys = Object.keys(eye_data[0])
         console.log(eye_keys)
 
-        //plotly code - Eye Color Comparison
+        //plotly code
+        // // Part 5 - Working Pie Chart
         var trace3 = {
             labels: eye_keys,
-            values: top_10_eyes,
+            values: eye_plot,
             type: 'pie'
         };
+
         var data = [trace3];
+
         var layout = {
             title: "Top 10 Most Common Hero Eye Color",
             showlegend: true,
             legend: { "orientation": "h" }
         };
+
         Plotly.newPlot("plot3", data, layout);
+
     })
+
 }
 
 function alignmentPie() {
+
 
     console.log(superheroes)
 
@@ -165,6 +185,7 @@ function alignmentPie() {
 
     var good_count = 0;
     var bad_count = 0;
+
 
     superheroes.forEach(hero => {
 
@@ -237,8 +258,10 @@ function alignmentPie() {
 
             good_count++;
 
+
         } else {
             bad_count++;
+
         }
         //console logs for primary stat data
         // console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
@@ -268,6 +291,8 @@ function alignmentPie() {
     };
     Plotly.newPlot("plot", data, layout);
 
+
+
     //plotly code for alignment pie chart
     var trace1 = {
         labels: ['Hero', 'Villian'],
@@ -276,6 +301,7 @@ function alignmentPie() {
     };
 
     var data = [trace1];
+
     var layout = {
         title: "Alignment Chart",
     };
@@ -449,7 +475,6 @@ function alignmentPie() {
         }
 
     }, false);
-
 }
 
 //speed_pics.map((item) =>
@@ -511,6 +536,7 @@ function displayGraphs(graph) {
         alignmentPie();
     }
 }
+
 //========================End Dashboard section=========================
 
 
@@ -523,13 +549,6 @@ function characterChange(superhero) {
     dashboardApp(superhero);
     biography(superhero);
     work(superhero);
-};
-
-function battleChange(superhero) {
-    battleImages1(superhero);
-};
-function battleChange2(superhero) {
-    battleImages2(superhero);
 };
 
 //PowerStats function
@@ -550,7 +569,7 @@ function dashboardPowerStats(superhero) {
     // } else {
     //     markerColor = "Orange";
     // }
-    
+
 
     var trace1 = {
         //labels: '',
@@ -558,6 +577,8 @@ function dashboardPowerStats(superhero) {
         x: stats_values,
         y: stats_keys,
         orientation: 'h',
+        text:stats_values.map(String),
+        textposition: 'auto'
         // marker: {
         //     color: markerColor,
         // }
@@ -574,7 +595,8 @@ function dashboardPowerStats(superhero) {
     };
     Plotly.newPlot("powerStats", data, layout);
 }
-//image creation
+
+
 function dashboardCharImage(superhero) {
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
     //console.log(charImages);
@@ -596,7 +618,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -611,7 +633,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -626,28 +648,80 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
 
 }
-  
+
+//========================Battle section============================
+
+
+function battleChange1(superhero){
+    battleImages1(superhero);
+    // calcStats(superhero);
+    player1 = calcStats(superhero);
+    console.log(player1)
+    
+};
+
+function battleChange2(superhero){
+    battleImages2(superhero);
+    calcStats(superhero);
+    player2 = calcStats(superhero);
+    console.log(player2);
+};
+
+function battleWinner(){
+    var winner;
+    if(player1 > player2){
+        winner = "Player1 Wins";
+    }
+
+    else if(player1 < player2){
+        winner = "Player2 Wins"
+    }
+    
+    else{winner = "Tie"}
+    
+
+    console.log(winner)
+    return winner;
+
+};
+
+
+
 function battleImages1(superhero){
-
-    //battle section characters
-
-    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
-    
-
-    battleImage1 = Object.values(battleImages);
-    d3.select(".image1>img").attr("src", battleImage1[1]);
-    console.log(battleImage1)
-    //battle section characters
-    
+    const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
+    image1 = Object.values(battleImages1);
+    d3.selectAll(".image1>img").attr("src", image1[1]);
+    // console.log(image1[1])
 }
+
+
 
 function battleImages2(superhero){
-    var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
-    battleImage2 = Object.values(battleImages2);
-    d3.select(".image2>img").attr("src", battleImage2[1]);
-    console.log(battleImage2)
+    const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
+    image2 = Object.values(battleImages2);
+    d3.selectAll(".image2>img").attr("src", image2[1]);
+    // console.log(image2[1])
+}
+
+
+function calcStats(superhero){
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    stats_values = Object.values(superStats)
+    // console.log(stats_values)
+    // totalStats = 0;
+
+    //getting sum of numbers
+    sumStats = stats_values.reduce(function(a,b){
+        return a + b;
+    },0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
+
+    // console.log(sumStats)
+
+    return sumStats;
 
 }
+
+//========================End Battle section============================

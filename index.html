@@ -11,7 +11,7 @@
 
   <!-- Favicons -->
   <link href="assets/img/characters/batvsjoker1.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
 
   <!-- Google Fonts -->
   <link
@@ -213,7 +213,7 @@
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-3">
-            <div class="charImage" style="padding-top:20px;">
+            <div class="charImage" style="position:absolute; top: 25%">
               <img src="">
             </div>
           </div>
@@ -251,8 +251,6 @@
               <div id="work" class="panel-body"></div>
             </div>
           </div>
-
-
         </div>
 
       </div>
@@ -267,16 +265,22 @@
         <!--Fighter/Battle Section title-->
         <div class="section-title">
           <h2>Battle</h2>
-          <p>Pick your fighters:</p>
           <hr>
-          <a href="#" class="btn-learn-more">Begin Fight!</a>
+          
+          <button onclick="battleWinner()">Begin Fight!</button>
+
+
+          <br>
+          <p>Pick your fighters:</p>
+
         </div>
         <!--Row for Character Selections-->
         <div class="row">
+          <div class ="col-1"></div>
           <div class="col-4">
             <div class="well">
               <h5>Characters:</h5>
-              <select id="selDataset2" onchange="battleChange(this.value)"></select>
+              <select id="selDataset2" onchange="battleChange1(this.value)"></select>
             </div>
           </div>
           <div class="col-2">
@@ -291,9 +295,14 @@
 
         <!--Row for bringing in character images-->
 
+
+
         <div class="row">
+
+          <div class ="col-1"></div>
+
           <div class="col-4">
-            <div class="image1">
+            <div class="image1" style="position:relative; left: 5%" >
               <img src="">
             </div>
           </div>
@@ -303,12 +312,12 @@
           </div>
 
           <div class="col-4">
-            <div class="image2">
+            <div class="image2" style="position:relative; left: 5%">
               <img src="">
             </div>
           </div>
         </div>
-      </div>
+
       </div>
       </div>
     </section><!-- End About Section -->
@@ -318,13 +327,10 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>The Team</h2>
-          <p>They traversed their universes for countless decades, wandering, looking for those with equal powers. Out
-            of nowhere a cosmic rift opened up and four heroes met. Some say this space-time rift was caused by Project
-            Two...others think it was the Brockwell Stone. <br>
-            Over time the group fought planet-sized bugs, battled thousands of clones called Jsons, and saved millions
-            of Pandas. After years of adventures they banded together and created The Team.
-          </p>
+          <h2>Team</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
+            in iste officiis commodi quidem hic quas.</p>
         </div>
 
         <div class="row">
@@ -405,7 +411,6 @@
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>
-
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
