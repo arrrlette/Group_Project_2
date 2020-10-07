@@ -90,13 +90,48 @@ function genderPie() {
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
     //console.log(JSON.parse(hairColor.response));
 
+
         var hair_data = JSON.parse(hairColor.response)
-        //sort descending
-        console.log(hair_data)
-        hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
-        console.log(hair_data)
-        // hair_plot = Object.values(hair_data[0])
-        // var top_10_hair = hair_plot.slice(0,10)
+
+        function sortByValue(hair){
+            var hairArray = [];
+            console.log(typeof(hair))
+            for(const [key,value] of Object.entries(hair)){
+                console.log("Key ", key);
+                console.log("value ", value);
+                hairArray.push([key, value])
+            }
+            // for(var i in hair)
+            // {
+            //     // Push each JSON Object entry in array by [value, key]
+            //     hairArray.push([hair[i], i]);
+            // }
+
+            console.log(hairArray);
+            sortedArray = hairArray.sort((firstNum, secondNum) => secondNum[1] - firstNum[1]);
+
+            return sortedArray;
+        }
+
+        sortedhair = sortByValue(hair_data[0]);
+        console.log(sortedhair)
+        // //sort descending
+        // console.log(hair_data)
+        // //hair_data.sort(function)
+        // sorted_hair = hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        // console.log(sorted_hair)
+        // //hair_plot = Object.values(hair_data[0])
+        // hair_plot.sort((firstNum, secondNum) => secondNum - firstNum);
+        // console.log(hair_plot)
+
+        var top_10_hair = sortedhair.slice(0,10)
+        var topHairValue = []
+        var topHairKey = []
+        top_10_hair.forEach(item => {
+            topHairValue.push(item[1])
+            topHairKey.push(item[0])
+        })
+        //console.log(sor)
 
         // //take the first 15 results
         // console.log(top_10_hair)
@@ -105,23 +140,23 @@ function genderPie() {
 
         // console.log(hair_keys)
 
-        // //plotly code
-        // // // Part 5 - Working Pie Chart
-        // var trace2 = {
-        //     labels: hair_keys,
-        //     values: hair_plot,
-        //     type: 'pie'
-        // };
+        //plotly code
+        // // Part 5 - Working Pie Chart
+        var trace2 = {
+            labels: topHairKey,
+            values: topHairValue,
+            type: 'pie'
+        };
 
-        // var data = [trace2];
+        var data = [trace2];
 
-        // var layout = {
-        //     title: "Hair Color",
-        //     showlegend: true,
-        //     legend: { "orientation": "h" }
-        // };
+        var layout = {
+            title: "Hair Color",
+            showlegend: true,
+            legend: { "orientation": "h" }
+        };
 
-        // Plotly.newPlot("plot2", data, layout);
+        Plotly.newPlot("plot2", data, layout);
     })
     //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
