@@ -44,9 +44,9 @@ function init(names) {
     //add names second character dropdown in battle section
     names.forEach((name) => {
         // --------------------END BATTLE INIT SECTION-------------------------
+
         battleDropdowns.append('option').text(name).property('value', name);
     });
-
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
@@ -88,25 +88,61 @@ function genderPie() {
 
 
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-        //console.log(JSON.parse(hairColor.response));
-
+    //console.log(JSON.parse(hairColor.response));
         var hair_data = JSON.parse(hairColor.response)
-        //console.log(hair_data)
-        hair_plot = Object.values(hair_data[0])
-        var top_10_hair = hair_plot.slice(0, 10)
 
-        //take the first 15 results
-        console.log(top_10_hair)
-        //capture labels for pie chart
-        hair_keys = Object.keys(hair_data[0])
+        function sortByValue(hair){
+            var hairArray = [];
+            console.log(typeof(hair))
+            for(const [key,value] of Object.entries(hair)){
+                console.log("Key ", key);
+                console.log("value ", value);
+                hairArray.push([key, value])
+            }
+            // for(var i in hair)
+            // {
+            //     // Push each JSON Object entry in array by [value, key]
+            //     hairArray.push([hair[i], i]);
+            // }
 
-        console.log(hair_keys)
+            console.log(hairArray);
+            sortedArray = hairArray.sort((firstNum, secondNum) => secondNum[1] - firstNum[1]);
+
+            return sortedArray;
+        }
+
+        sortedhair = sortByValue(hair_data[0]);
+        console.log(sortedhair)
+        // //sort descending
+        // console.log(hair_data)
+        // //hair_data.sort(function)
+        // sorted_hair = hair_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        // console.log(sorted_hair)
+        // //hair_plot = Object.values(hair_data[0])
+        // hair_plot.sort((firstNum, secondNum) => secondNum - firstNum);
+        // console.log(hair_plot)
+
+        var top_10_hair = sortedhair.slice(0,10)
+        var topHairValue = []
+        var topHairKey = []
+        top_10_hair.forEach(item => {
+            topHairValue.push(item[1])
+            topHairKey.push(item[0])
+        })
+        //console.log(sor)
+
+        // //take the first 15 results
+        // console.log(top_10_hair)
+        // //capture labels for pie chart
+        // hair_keys = Object.keys(hair_data[0])
+
+        // console.log(hair_keys)
 
         //plotly code
         // // Part 5 - Working Pie Chart
         var trace2 = {
-            labels: hair_keys,
-            values: hair_plot,
+            labels: topHairKey,
+            values: topHairValue,
             type: 'pie'
         };
 
@@ -122,43 +158,42 @@ function genderPie() {
     })
     //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
-        //console.log(JSON.parse(eyeColor.response));
+    //console.log(JSON.parse(eyeColor.response));
 
         var eye_data = JSON.parse(eyeColor.response)
+        console.log(eye_data);
         //sort descending
         eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
         console.log(eye_data)
-        eye_plot = Object.values(eye_data[0])
-        var top_10_eyes = eye_plot.slice(0, 10)
-        console.log(top_10_eyes)
-        //eye color keys for plot
-        eye_keys = Object.keys(eye_data[0])
-        console.log(eye_keys)
+        // eye_plot = Object.values(eye_data[0])
+        // var top_10_eyes = eye_plot.slice(0, 10)
+        // console.log(top_10_eyes)
+        // //eye color keys for plot
+        // eye_keys = Object.keys(eye_data[0])
+        // console.log(eye_keys)
 
-        //plotly code
-        // // Part 5 - Working Pie Chart
-        var trace3 = {
-            labels: eye_keys,
-            values: eye_plot,
-            type: 'pie'
-        };
+        // //plotly code
+        // // // Part 5 - Working Pie Chart
+        // var trace3 = {
+        //     labels: eye_keys,
+        //     values: eye_plot,
+        //     type: 'pie'
+        // };
 
-        var data = [trace3];
+        // var data = [trace3];
 
-        var layout = {
-            title: "Top 10 Most Common Hero Eye Color",
-            showlegend: true,
-            legend: { "orientation": "h" }
-        };
+        // var layout = {
+        //     title: "Top 10 Most Common Hero Eye Color",
+        //     showlegend: true,
+        //     legend: { "orientation": "h" }
+        // };
 
-        Plotly.newPlot("plot3", data, layout);
-
+        // Plotly.newPlot("plot3", data, layout);
     })
 
 }
 
 function alignmentPie() {
-
 
     console.log(superheroes)
 
@@ -340,12 +375,10 @@ function alignmentPie() {
         Plotly.newPlot("plot3", data, layout);
     })
 
-
     const alignmentsuperStats = superheroes[0].powerstats;
     powerstat_labels = Object.keys(alignmentsuperStats);
 
     console.log(powerstat_labels)
-
 
     //code to dynamically create primary stat dropdown
     var select = document.createElement("select");
@@ -364,8 +397,6 @@ function alignmentPie() {
     label.htmlFor = "primarystat";
 
     document.getElementById("primarystatpanel").appendChild(label).appendChild(select);
-
-
 
     var uselect = document.createElement("select");
     uselect.name = "Universe";
@@ -585,8 +616,6 @@ function dashboardPowerStats(superhero) {
     };
     var data = [trace1];
 
-
-
     var layout = {
         title: "PowerStats",
         xaxis: {
@@ -654,7 +683,6 @@ function work(superhero) {
 
 //========================Battle section============================
 
-
 function battleChange1(superhero) {
     battleImages1(superhero);
     // calcStats(superhero);
@@ -699,38 +727,34 @@ function battleWinner() {
         `
     })
 
-
 };
 
 
-
 function battleImages1(superhero) {
+
     const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
     image1 = Object.values(battleImages1);
     d3.selectAll(".image1>img").attr("src", image1[1]);
     // console.log(image1[1])
 }
 
-
-
-function battleImages2(superhero) {
+function battleImages2(superhero){
     const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
     image2 = Object.values(battleImages2);
     d3.selectAll(".image2>img").attr("src", image2[1]);
     // console.log(image2[1])
 }
 
-
-function calcStats(superhero) {
+function calcStats(superhero){
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
     stats_values = Object.values(superStats)
     // console.log(stats_values)
     // totalStats = 0;
 
     //getting sum of numbers
-    sumStats = stats_values.reduce(function (a, b) {
+    sumStats = stats_values.reduce(function(a,b){
         return a + b;
-    }, 0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
+    },0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
 
     // console.log(sumStats)
 
