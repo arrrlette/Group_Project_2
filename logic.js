@@ -43,10 +43,10 @@ function init(names) {
 
     //add names second character dropdown in battle section
     names.forEach((name) => {
-    // --------------------END BATTLE INIT SECTION-------------------------
+        // --------------------END BATTLE INIT SECTION-------------------------
+
         battleDropdowns.append('option').text(name).property('value', name);
     });
-
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
@@ -89,8 +89,6 @@ function genderPie() {
 
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
     //console.log(JSON.parse(hairColor.response));
-
-
         var hair_data = JSON.parse(hairColor.response)
 
         function sortByValue(hair){
@@ -191,13 +189,11 @@ function genderPie() {
         // };
 
         // Plotly.newPlot("plot3", data, layout);
-
     })
 
 }
 
 function alignmentPie() {
-
 
     console.log(superheroes)
 
@@ -350,7 +346,7 @@ function alignmentPie() {
     //Publisher/Universe Query from app.py logic into dictionary and build Pie Chart
     d3.request("http://127.0.0.1:5000/universe").get(universe => {
         var universe_data = JSON.parse(universe.response)
-        
+
         console.log(universe_data)
         //sort descending
 
@@ -379,12 +375,10 @@ function alignmentPie() {
         Plotly.newPlot("plot3", data, layout);
     })
 
-    
     const alignmentsuperStats = superheroes[0].powerstats;
     powerstat_labels = Object.keys(alignmentsuperStats);
 
     console.log(powerstat_labels)
-    
 
     //code to dynamically create primary stat dropdown
     var select = document.createElement("select");
@@ -403,8 +397,6 @@ function alignmentPie() {
     label.htmlFor = "primarystat";
 
     document.getElementById("primarystatpanel").appendChild(label).appendChild(select);
-
-   
 
     var uselect = document.createElement("select");
     uselect.name = "Universe";
@@ -616,7 +608,7 @@ function dashboardPowerStats(superhero) {
         x: stats_values,
         y: stats_keys,
         orientation: 'h',
-        text:stats_values.map(String),
+        text: stats_values.map(String),
         textposition: 'auto'
         // marker: {
         //     color: markerColor,
@@ -624,12 +616,10 @@ function dashboardPowerStats(superhero) {
     };
     var data = [trace1];
 
-
-
     var layout = {
         title: "PowerStats",
-        xaxis:{
-            range: [1,100],
+        xaxis: {
+            range: [1, 100],
         }
     };
     Plotly.newPlot("powerStats", data, layout);
@@ -693,50 +683,60 @@ function work(superhero) {
 
 //========================Battle section============================
 
-
-function battleChange1(superhero){
+function battleChange1(superhero) {
     battleImages1(superhero);
     // calcStats(superhero);
     player1 = calcStats(superhero);
-    console.log(player1)
-    
+    //console.log(player1)
+
 };
 
-function battleChange2(superhero){
+function battleChange2(superhero) {
     battleImages2(superhero);
     calcStats(superhero);
     player2 = calcStats(superhero);
-    console.log(player2);
+    //console.log(player2);
 };
 
-function battleWinner(){
+function battleWinner() {
+    
     var winner;
-    if(player1 > player2){
-        winner = "Player1 Wins";
+    if (player1 > player2) {
+        winner = "Fighter 1";
     }
 
-    else if(player1 < player2){
-        winner = "Player2 Wins"
+    else if (player1 < player2) {
+        winner = "Fighter 2"
     }
-    
-    else{winner = "Tie"}
-    
 
-    console.log(winner)
-    return winner;
+    else { winner = "Tie" }
+
+
+    //console.log(winner)
+    
+    return Swal.fire({
+        title: `${winner} is the winner! Go get 'em cowboy`,
+        text: "Time for another battle",
+        width: 600,
+        padding: '3em',
+        background: `#fff url(https://media3.giphy.com/media/10bKPDUM5H7m7u/giphy.gif) center`,
+        backdrop: `
+          rgba(255,82,71,0.4)
+          top center
+          no-repeat
+        `
+    })
 
 };
 
 
+function battleImages1(superhero) {
 
-function battleImages1(superhero){
     const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
     image1 = Object.values(battleImages1);
     d3.selectAll(".image1>img").attr("src", image1[1]);
     // console.log(image1[1])
 }
-
-
 
 function battleImages2(superhero){
     const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
@@ -744,7 +744,6 @@ function battleImages2(superhero){
     d3.selectAll(".image2>img").attr("src", image2[1]);
     // console.log(image2[1])
 }
-
 
 function calcStats(superhero){
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;

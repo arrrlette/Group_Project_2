@@ -36,6 +36,7 @@
   <script src="logic.js"></script>
 
 
+
   <!-- =======================================================
   * Template Name: OnePage - v2.1.0
   * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
@@ -175,17 +176,11 @@
         <div class="row">
           <div class="col-md-6">
             <div id="primarystatpanel"></div>
-          
-          
           </div>
           <div class="col-md-6">
             <div id="universepanel"></div>
-          
-          
           </div>
-
         </div>
-
       </div>
     </section><!-- End Sevices Section -->
 
@@ -266,20 +261,17 @@
         <div class="section-title">
           <h2>Battle</h2>
           <hr>
-          
-          <button onclick="battleWinner()">Begin Fight!</button>
-
-
           <br>
-          <p>Pick your fighters:</p>
-
+          <p>Pick your fighters the click begin fight button!</p>
+          <br>
+          <button onclick="battleWinner()">Begin Fight!</button>
         </div>
         <!--Row for Character Selections-->
         <div class="row">
-          <div class ="col-1"></div>
+          <div class="col-1"></div>
           <div class="col-4">
             <div class="well">
-              <h5>Characters:</h5>
+              <h5>Fighter 1:</h5>
               <select id="selDataset2" onchange="battleChange1(this.value)"></select>
             </div>
           </div>
@@ -287,37 +279,29 @@
           </div>
           <div class="col-4 justify-content-center">
             <div class="well">
-              <h5>Characters:</h5>
+              <h5>Fighter 2:</h5>
               <select id="selDataset3" onchange="battleChange2(this.value)"></select>
             </div>
           </div>
         </div>
 
         <!--Row for bringing in character images-->
-
-
-
         <div class="row">
-
-          <div class ="col-1"></div>
-
+          <div class="col-1"></div>
           <div class="col-4">
-            <div class="image1" style="position:relative; left: 5%" >
+            <div class="image1" style="position:relative; left: 5%">
               <img src="">
             </div>
           </div>
-
           <div class="col-2">
             <img src="assets/img/characters/comic-vs-versus-1.png" class="img-fluid" alt="">
           </div>
-
           <div class="col-4">
             <div class="image2" style="position:relative; left: 5%">
               <img src="">
             </div>
           </div>
         </div>
-
       </div>
       </div>
     </section><!-- End About Section -->
@@ -332,8 +316,7 @@
             of nowhere a cosmic rift opened up and four heroes met. Some say this rift was caused by Project
             Two...others think it was the Brockwell Stone. <br>
             Over time the group fought planet-sized bugs, battled thousands of clones called Jsons, and saved millions
-            of Pandas. After years of adventures they banded together and created The Team.
-          </p>
+            of Pandas. After years of adventures they banded together and created The Team.</p>
         </div>
 
         <div class="row">
@@ -429,6 +412,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <!-- <script src="./static/js/app.js"></script> -->
 
   <!-- Template Main JS File -->
