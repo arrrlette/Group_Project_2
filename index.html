@@ -11,7 +11,7 @@
 
   <!-- Favicons -->
   <link href="assets/img/characters/batvsjoker1.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
 
   <!-- Google Fonts -->
   <link
@@ -34,6 +34,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
   <script src="logic.js"></script>
+
 
 
   <!-- =======================================================
@@ -172,6 +173,20 @@
             <!-- testing end -->
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div id="primarystatpanel"></div>
+
+
+          </div>
+          <div class="col-md-6">
+            <div id="universepanel"></div>
+
+
+          </div>
+
+        </div>
+
       </div>
     </section><!-- End Sevices Section -->
 
@@ -203,23 +218,23 @@
               <img src="">
             </div>
           </div>
-            <div class="col-md-7">
-              <div id="powerStats"></div>
-            </div>
+          <div class="col-md-7">
+            <div id="powerStats"></div>
+          </div>
         </div>
 
-      
+
         <div class="row">
-          <div class="col-md-4">     
+          <div class="col-md-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Appearance</h3>
               </div>
               <div id="superApp" class="panel-body"></div>
             </div>
-          </div>        
+          </div>
 
-          <div class="col-md-4">     
+          <div class="col-md-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Biography</h3>
@@ -227,17 +242,16 @@
               <div id="biography" class="panel-body"></div>
             </div>
           </div>
-          
-          
-          <div class="col-md-4">     
+
+
+          <div class="col-md-4">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">Work</h3>
               </div>
               <div id="work" class="panel-body"></div>
             </div>
-          </div>   
-
+          </div>
         </div>
 
       </div>
@@ -247,22 +261,25 @@
 
     <!-- ======= About/battle Section ======= -->
     <section id="about" class="about">
-      <div class="container" data-aos="fade-up" >
+      <div class="container" data-aos="fade-up">
+
         <!--Fighter/Battle Section title-->
         <div class="section-title">
           <h2>Battle</h2>
-          <p>Pick your fighters:</p>
           <hr>
-          
-          <a href="battle.html" class = "btn-learn-more" onclick="popup(this.href);return false">Begin Fight!</a>
+
+          <br>
+          <p>Pick your fighters the click begin fight button!</p>
+          <br>
+          <button onclick="battleWinner()">Begin Fight!</button>
 
         </div>
         <!--Row for Character Selections-->
         <div class="row">
-          <div class ="col-1"></div>
+          <div class="col-1"></div>
           <div class="col-4">
             <div class="well">
-              <h5>Characters:</h5>
+              <h5>Fighter 1:</h5>
               <select id="selDataset2" onchange="battleChange1(this.value)"></select>
             </div>
           </div>
@@ -270,7 +287,7 @@
           </div>
           <div class="col-4 justify-content-center">
             <div class="well">
-              <h5>Characters:</h5>
+              <h5>Fighter 2:</h5>
               <select id="selDataset3" onchange="battleChange2(this.value)"></select>
             </div>
           </div>
@@ -282,10 +299,10 @@
 
         <div class="row">
 
-          <div class ="col-1"></div>
+          <div class="col-1"></div>
 
           <div class="col-4">
-            <div class="image1" style="position:relative; left: 5%" >
+            <div class="image1" style="position:relative; left: 5%">
               <img src="">
             </div>
           </div>
@@ -300,7 +317,7 @@
             </div>
           </div>
         </div>
-      </div>
+
       </div>
       </div>
     </section><!-- End About Section -->
@@ -312,11 +329,10 @@
         <div class="section-title">
           <h2>Team</h2>
           <p>They traversed their universes for countless decades, wandering, looking for those with equal powers. Out
-            of nowhere a cosmic rift opened up and four heroes met. Some say this space-time rift was caused by Project
+            of nowhere a cosmic rift opened up and four heroes met. Some say this rift was caused by Project
             Two...others think it was the Brockwell Stone. <br>
             Over time the group fought planet-sized bugs, battled thousands of clones called Jsons, and saved millions
-            of Pandas. After years of adventures they banded together and created The Team.
-          </p>
+            of Pandas. After years of adventures they banded together and created The Team.</p>
         </div>
 
         <div class="row">
@@ -324,7 +340,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/characters/arlette.jpeg" class="img-fluid" alt="">
+                <img src="assets/img/team/arlette_flames.jpg" class="img-fluid" alt="">
 
               </div>
               <div class="member-info">
@@ -337,11 +353,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/characters/Anthony.jpeg" class="img-fluid" alt="">
+                <img src="assets/img/team/English.jpg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
                 <h4>Anthony English</h4>
-                <span>Zombie Leader</span>
+                <span>Product Manager</span>
               </div>
             </div>
           </div>
@@ -349,11 +365,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/characters/Alexandra.jpeg" class="img-fluid" alt="">
+                <img src="assets/img/characters/joker.jpg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
-                <h4>Mushroom</h4>
-                <span>Bathroom Renovator</span>
+                <h4>The Joker</h4>
+                <span>CFO</span>
               </div>
             </div>
           </div>
@@ -361,11 +377,11 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/characters/nathan.jpeg" class="img-fluid" alt="">
+                <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
-                <h4>Nathan Bolt</h4>
-                <span>Clumsy Intern</span>
+                <h4>Amanda Jepson</h4>
+                <span>Accountant</span>
               </div>
             </div>
           </div>
@@ -412,6 +428,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <!-- <script src="./static/js/app.js"></script> -->
 
   <!-- Template Main JS File -->
@@ -420,4 +439,3 @@
 </body>
 
 </html>
-

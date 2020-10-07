@@ -83,6 +83,28 @@ def gender():
     return jsonify(gendersjson)
 
 
+@app.route("/universe/", methods=['GET'])
+def universe():
+
+    universecount = list(superdb.aggregate([
+        {"$group": {
+            "_id": {"$toLower": "$biography.publisher"},
+            "count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": "",
+            "counts": {
+                "$push": {"k": "$_id", "v": "$count"}
+            }
+        }},
+        {"$replaceRoot": {
+            "newRoot": {"$arrayToObject": "$counts"}
+        }}
+    ]))
+
+    universejson = json.loads(json_util.dumps(universecount))
+    return jsonify(universejson)
+
 @app.route("/hairColor/", methods=['GET'])
 def hairColor():
     hairColorcount = list(superdb.aggregate([
@@ -104,6 +126,7 @@ def hairColor():
     hairColorjson = json.loads(json_util.dumps(hairColorcount))
     return jsonify(hairColorjson)
 
+
 @app.route("/eyeColor/", methods=['GET'])
 def eyeColor():
     eyeColorcount = list(superdb.aggregate([
@@ -121,8 +144,10 @@ def eyeColor():
             "newRoot": {"$arrayToObject": "$counts"}
         }}
     ]))
+
     eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
     return jsonify(eyeColorjson)
+
 
 @app.route("/powerStats/<character>", methods=['GET'])
 def powerStats(character):

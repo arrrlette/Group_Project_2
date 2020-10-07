@@ -26,26 +26,16 @@ function init(names) {
 
     //add names to character selection drop down
     names.forEach((name) => {
-        dropDown.append('option').text(name).property('value', name);    
-<<<<<<< HEAD
-    })
-
-    //---------------------- END CHARACTER INIT SECTION--------------------
-
-
-
-    // -----------------------BATTLE INIT SECTION--------------------------
-=======
+        dropDown.append('option').text(name).property('value', name);
     });
-    // --------------BATTLE SECTION-----------------------
->>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
+
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
     //add names to first character dropdown in battle section
     names.forEach((name) => {
-        battleDropdowns.append('option').text(name).property('value', name);    
-    })
+        battleDropdowns.append('option').text(name).property('value', name);
+    });
 
 
     //select html for second character dropdown in battle section
@@ -53,71 +43,20 @@ function init(names) {
 
     //add names second character dropdown in battle section
     names.forEach((name) => {
-        battleDropdowns.append('option').text(name).property('value', name);    
-    })
+        // --------------------END BATTLE INIT SECTION-------------------------
+        battleDropdowns.append('option').text(name).property('value', name);
+    });
 
-    // --------------------END BATTLE INIT SECTION-------------------------
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
-<<<<<<< HEAD
     characterChange(names[0]) //to display first character in array on init
     battleChange1(names[0])
     battleChange2(names[0])
 
-=======
-    characterChange(names[0]); //to display first character in array on init
-    battleChange(names[0]);
-    battleChange2(names[0]);
->>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
 };
 
 
-
-//========================Battle section============================
-
-
-function battleChange1(superhero){
-
-    battleImages1(superhero);
-};
-
-function battleChange2(superhero){
-
-    battleImages2(superhero);
-};
-
-
-
-function battleImages1(superhero){
-
-    const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
-
-    image1 = Object.values(battleImages1);
-    d3.select(".image1>img").attr("src", image1[1]);
-    // console.log(image1[1])
-
-}
-
-
-
-
-function battleImages2(superhero){
-
-    const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
-
-    image2 = Object.values(battleImages2);
-    d3.select(".image2>img").attr("src", image2[1]);
-    // console.log(image2[1])
-}
-
-// JavaScript popup window function
-function popup(url) {
-    popupWindow = window.open(url,'popUpWindow','height=800,width=1000,left=50,top=50,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')
-        }
-
-
-//========================End Battle section============================
 
 //========================Dashboard section============================
 function genderPie() {
@@ -149,12 +88,15 @@ function genderPie() {
 
 
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-    //console.log(JSON.parse(hairColor.response));
+        //console.log(JSON.parse(hairColor.response));
 
         var hair_data = JSON.parse(hairColor.response)
         //console.log(hair_data)
         hair_plot = Object.values(hair_data[0])
-        //console.log(hair_plot)
+        var top_10_hair = hair_plot.slice(0, 10)
+
+        //take the first 15 results
+        console.log(top_10_hair)
         //capture labels for pie chart
         hair_keys = Object.keys(hair_data[0])
 
@@ -173,21 +115,25 @@ function genderPie() {
         var layout = {
             title: "Hair Color",
             showlegend: true,
-            legend: {"orientation": "h"}
+            legend: { "orientation": "h" }
         };
 
         Plotly.newPlot("plot2", data, layout);
-
-    })   
+    })
+    //Eye Color Query from app.py logic into dictionary and build Pie Chart  
     d3.request("http://127.0.0.1:5000/eyeColor").get(eyeColor => {
-    //console.log(JSON.parse(eyeColor.response));
+        //console.log(JSON.parse(eyeColor.response));
 
         var eye_data = JSON.parse(eyeColor.response)
-        //console.log(eye_data)
+        //sort descending
+        eye_data.sort((firstNum, secondNum) => secondNum - firstNum);
+        console.log(eye_data)
         eye_plot = Object.values(eye_data[0])
-        //console.log(eye_plot)
+        var top_10_eyes = eye_plot.slice(0, 10)
+        console.log(top_10_eyes)
         //eye color keys for plot
         eye_keys = Object.keys(eye_data[0])
+        console.log(eye_keys)
 
         //plotly code
         // // Part 5 - Working Pie Chart
@@ -200,7 +146,9 @@ function genderPie() {
         var data = [trace3];
 
         var layout = {
-            title: "Eye Color",
+            title: "Top 10 Most Common Hero Eye Color",
+            showlegend: true,
+            legend: { "orientation": "h" }
         };
 
         Plotly.newPlot("plot3", data, layout);
@@ -318,12 +266,12 @@ function alignmentPie() {
         //console logs for primary stat data
         // console.log(combat_count + "," + durability_count + "," + intelligence_count + "," +
         //     power_count + "," + speed_count + "," + strength_count)
-        // console.log(combat_list)
-        // console.log(durability_list)
-        // console.log(intelligence_list)
-        // console.log(power_list)
-        // console.log(speed_list)
-        // console.log(strength_list)
+        console.log(combat_list)
+        console.log(durability_list)
+        console.log(intelligence_list)
+        console.log(power_list)
+        console.log(speed_list)
+        console.log(strength_list)
         // console.log(combat_pics)
         // console.log(strength_pics)
         // console.log(good_count + "," + bad_count)
@@ -360,7 +308,223 @@ function alignmentPie() {
 
     Plotly.newPlot("plot2", data, layout);
 
+    //Publisher/Universe Query from app.py logic into dictionary and build Pie Chart
+    d3.request("http://127.0.0.1:5000/universe").get(universe => {
+        var universe_data = JSON.parse(universe.response)
+
+        console.log(universe_data)
+        //sort descending
+
+        sorted_data = universe_data.sort((a, b) => b - a);
+        console.log(sorted_data)
+        universe_plot = Object.values(sorted_data[0])
+
+        var top_10_universe = universe_plot.slice(0, 10)
+        console.log(top_10_universe)
+        //eye color keys for plot
+        universe_keys = Object.keys(universe_data[0])
+        console.log(universe_keys)
+
+        //plotly code for gender pie chart
+        var trace1 = {
+            labels: universe_keys,
+            values: top_10_universe,
+            type: 'pie'
+        };
+        var data = [trace1];
+        var layout = {
+            title: "Universe",
+            showlegend: true,
+            legend: { "orientation": "h" }
+        };
+        Plotly.newPlot("plot3", data, layout);
+    })
+
+
+    const alignmentsuperStats = superheroes[0].powerstats;
+    powerstat_labels = Object.keys(alignmentsuperStats);
+
+    console.log(powerstat_labels)
+
+
+    //code to dynamically create primary stat dropdown
+    var select = document.createElement("select");
+    select.name = "Primary Stat";
+    select.id = "primarystat"
+
+    for (const val of powerstat_labels) {
+        var option = document.createElement("option");
+        option.value = val;
+        option.text = val.charAt(0).toUpperCase() + val.slice(1);
+        select.appendChild(option);
+    }
+
+    var label = document.createElement("label");
+    label.innerHTML = "Choose Primary Stat: "
+    label.htmlFor = "primarystat";
+
+    document.getElementById("primarystatpanel").appendChild(label).appendChild(select);
+
+
+
+    var uselect = document.createElement("select");
+    uselect.name = "Universe";
+    uselect.id = "universe"
+
+    // for (const val of universe_keys) {
+    //     var option = document.createElement("option");
+    //     option.value = val;
+    //     option.text = val.charAt(0).toUpperCase() + val.slice(1);
+    //     uselect.appendChild(option);
+    // }
+
+    var ulabel = document.createElement("label");
+    ulabel.innerHTML = "Choose Universe: "
+    ulabel.htmlFor = "universe";
+
+    document.getElementById("universepanel").appendChild(ulabel).appendChild(uselect);
+
+    mypanelDiv = document.getElementById("primarystatpanel");
+    console.log(mypanelDiv)
+    var panel = document.createElement("div");
+
+    panel.innerHTML = '<div class="panel panel-primary">' +
+        '<div class="panel-heading">' +
+        '<h3 class="panel-title">Heroes/Villains</h3>' +
+        '</div>' +
+        '<div id="primarystatlist" class="panel-body">' +
+        + '</div>' + '</div>'
+
+    mypanelDiv.appendChild(panel);
+
+    //select html for panel body
+    var appHTML = d3.select("#primarystatlist");
+
+    //to only show current data called
+    appHTML.html("")
+
+    //add combat heroes by default on initial load
+    //appends each combat hero name to the panel
+    combat_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+
+    mypanelDiv.appendChild(panel);
+
+    //code to grab when a primary stat is selected from the dropdown
+    document.addEventListener('input', function (event) {
+
+        // Only run on our select menu
+        if (event.target.id !== 'primarystat') return;
+
+        // The selected value
+        selected_value = event.target.value
+        console.log(selected_value);
+
+
+        //var myTableDiv = document.getElementById("speedlist");
+
+        //to only show current data called
+        appHTML.html("")
+
+
+        //switch statement to populate superheroes based on primary stat selected
+        switch (selected_value) {
+            case "combat":
+
+                console.log(combat_list)
+                //appends each key and value in the metaData to the html
+                combat_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            case "durability":
+
+                console.log(durability_list)
+                //appends each key and value in the metaData to the html
+                durability_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            case "intelligence":
+
+                console.log(intelligence_list)
+                //appends each key and value in the metaData to the html
+                intelligence_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            case "power":
+
+                console.log(power_list)
+                //appends each key and value in the metaData to the html
+                power_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            case "speed":
+
+                console.log(speed_list)
+                //appends each key and value in the metaData to the html
+                speed_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            case "strength":
+
+                console.log(strength_list)
+                //appends each key and value in the metaData to the html
+                strength_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
+                break;
+
+            default:
+                console.log('no stat selected');
+        }
+
+    }, false);
 }
+
+//speed_pics.map((item) =>
+
+//var myTableDiv = document.getElementById("myDynamicTable");
+
+//console.log(myTableDiv)
+
+// var table = document.createElement('TABLE');
+// table.border = '1';
+
+// var tableBody = document.createElement('TBODY');
+// table.appendChild(tableBody);
+
+// // Use `Object.values` and `forEach` to iterate through values
+// Object.values(speed_list).forEach(value => {
+
+//     console.log(value);
+
+//     var tr = document.createElement('TR');
+//     tableBody.appendChild(tr);
+
+//     //hero name field
+//     var td = document.createElement('TD');
+//     td.width = '200';
+//     td.appendChild(document.createTextNode(value))
+//     tr.appendChild(td);
+
+// });
+
+// // Use `Object.values` and `forEach` to iterate through values
+// Object.values(speed_pics).forEach(value => {
+
+//     console.log(value);
+//     //hero image field
+//     var td = document.createElement('TD');
+//     td.width = '200';
+//     td.appendChild(document.createTextNode(value))
+//     tr.appendChild(td);
+
+//     for (var j = 0; j < 4; j++) {
+//         var td = document.createElement('TD');
+//         td.width = '75';
+//         td.appendChild(document.createTextNode("Cell " + i + "," + j));
+//         tr.appendChild(td);
+//     }
+//});
+
+//myTableDiv.appendChild(table);
+
 //display graphs
 function displayGraphs(graph) {
 
@@ -387,7 +551,6 @@ function characterChange(superhero) {
     work(superhero);
 };
 
-
 //PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
@@ -399,7 +562,6 @@ function dashboardPowerStats(superhero) {
     console.log(stats_keys)
     stats_values = Object.values(superStats)
     console.log(stats_values)
-
 
     // markerColor = '';
     // if(stats_values > 75){
@@ -415,7 +577,7 @@ function dashboardPowerStats(superhero) {
         x: stats_values,
         y: stats_keys,
         orientation: 'h',
-        text:stats_values.map(String),
+        text: stats_values.map(String),
         textposition: 'auto'
         // marker: {
         //     color: markerColor,
@@ -427,8 +589,8 @@ function dashboardPowerStats(superhero) {
 
     var layout = {
         title: "PowerStats",
-        xaxis:{
-            range: [1,100],
+        xaxis: {
+            range: [1, 100],
         }
     };
     Plotly.newPlot("powerStats", data, layout);
@@ -456,7 +618,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -471,7 +633,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
 
 }
 
@@ -486,32 +648,94 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${key}:</strong> ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
 
-<<<<<<< HEAD
-=======
 }
-  
-function battleImages1(superhero){
 
-    //battle section characters
+//========================Battle section============================
 
-    const battleImages = superheroes.filter(x => x.name === superhero)[0].images;
+
+function battleChange1(superhero) {
+    battleImages1(superhero);
+    // calcStats(superhero);
+    player1 = calcStats(superhero);
+    //console.log(player1)
+
+};
+
+function battleChange2(superhero) {
+    battleImages2(superhero);
+    calcStats(superhero);
+    player2 = calcStats(superhero);
+    //console.log(player2);
+};
+
+function battleWinner() {
     
+    var winner;
+    if (player1 > player2) {
+        winner = "Fighter 1";
+    }
 
-    battleImage1 = Object.values(battleImages);
-    d3.select(".image1>img").attr("src", battleImage1[1]);
-    console.log(battleImage1)
-    //battle section characters
+    else if (player1 < player2) {
+        winner = "Fighter 2"
+    }
+
+    else { winner = "Tie" }
+
+
+    //console.log(winner)
     
+    return Swal.fire({
+        title: `${winner} is the winner! Go get 'em cowboy`,
+        text: "Time for another battle",
+        width: 600,
+        padding: '3em',
+        background: `#fff url(https://media3.giphy.com/media/10bKPDUM5H7m7u/giphy.gif) center`,
+        backdrop: `
+          rgba(255,82,71,0.4)
+          top center
+          no-repeat
+        `
+    })
+
+
+};
+
+
+
+function battleImages1(superhero) {
+    const battleImages1 = superheroes.filter(x => x.name === superhero)[0].images
+    image1 = Object.values(battleImages1);
+    d3.selectAll(".image1>img").attr("src", image1[1]);
+    // console.log(image1[1])
 }
 
-function battleImages2(superhero){
-    var battleImages2 = superheroes.filter(x => x.name === superhero)[0].images;
 
-    battleImage2 = Object.values(battleImages2);
-    d3.select(".image2>img").attr("src", battleImage2[1]);
-    console.log(battleImage2)
 
->>>>>>> 11e2ba49bb5b9799ad5b16c32f35550301e12a21
+function battleImages2(superhero) {
+    const battleImages2 = superheroes.filter(x => x.name === superhero)[0].images
+    image2 = Object.values(battleImages2);
+    d3.selectAll(".image2>img").attr("src", image2[1]);
+    // console.log(image2[1])
 }
+
+
+function calcStats(superhero) {
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+    stats_values = Object.values(superStats)
+    // console.log(stats_values)
+    // totalStats = 0;
+
+    //getting sum of numbers
+    sumStats = stats_values.reduce(function (a, b) {
+        return a + b;
+    }, 0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
+
+    // console.log(sumStats)
+
+    return sumStats;
+
+}
+
+//========================End Battle section============================
