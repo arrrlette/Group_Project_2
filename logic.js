@@ -585,14 +585,6 @@ function alignmentPie() {
         Plotly.newPlot("plot3", data, layout);
 
 
-
-        // // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
-        // //     var powerStats_data = powerStats.response
-        // //     console.log(powerStats_data)
-        // stats_keys = Object.keys(superStats)
-        // console.log(stats_keys)
-        // stats_values = Object.values(superStats)
-        // console.log(stats_values)
     });
 
     //const universeheroes = superheroes.filter(x => x.name === selected_universe)[0].name;
@@ -648,17 +640,12 @@ function alignmentPie() {
     console.log(myTableDiv)
 
     
-
     //default stat hero list to combat heroes
     build_list(myTableDiv, combat_list, combat_pics);
-
-    
 
     //add combat heroes by default on initial load
     //appends each combat hero name to the panel
     //combat_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
-
 
     mypanelDiv.appendChild(panel);
 
@@ -753,88 +740,7 @@ function alignmentPie() {
 
     }, false);
 
-    //universe dropdown
-    // var uselect = document.createElement("select");
-    // uselect.name = "Universe";
-    // uselect.id = "universe"
-
-    // console.log(topuniverseKey)
-    // for (const val of topuniverseKey) {
-    //     var option = document.createElement("option");
-    //     option.value = val;
-    //     option.text = val.charAt(0).toUpperCase() + val.slice(1);
-    //     uselect.appendChild(option);
-    // }
-
-    // var ulabel = document.createElement("label");
-    // ulabel.innerHTML = "Choose Universe: "
-    // ulabel.htmlFor = "universe";
-
-    // document.getElementById("universepanel").appendChild(ulabel).appendChild(uselect);
-
-    // //code to grab when a primary stat is selected from the dropdown
-    // document.addEventListener('input', function (event) {
-
-    //     // Only run on our select menu
-    //     if (event.target.id !== 'universe') return;
-
-    //     // The selected value
-    //     selected_universe = event.target.value
-    //     console.log(selected_universe);
-
-
-
-
-    // }, false);
 }
-
-//speed_pics.map((item) =>
-
-//var myTableDiv = document.getElementById("myDynamicTable");
-
-//console.log(myTableDiv)
-
-// var table = document.createElement('TABLE');
-// table.border = '1';
-
-// var tableBody = document.createElement('TBODY');
-// table.appendChild(tableBody);
-
-// // Use `Object.values` and `forEach` to iterate through values
-// Object.values(speed_list).forEach(value => {
-
-//     console.log(value);
-
-//     var tr = document.createElement('TR');
-//     tableBody.appendChild(tr);
-
-//     //hero name field
-//     var td = document.createElement('TD');
-//     td.width = '200';
-//     td.appendChild(document.createTextNode(value))
-//     tr.appendChild(td);
-
-// });
-
-// // Use `Object.values` and `forEach` to iterate through values
-// Object.values(speed_pics).forEach(value => {
-
-//     console.log(value);
-//     //hero image field
-//     var td = document.createElement('TD');
-//     td.width = '200';
-//     td.appendChild(document.createTextNode(value))
-//     tr.appendChild(td);
-
-//     for (var j = 0; j < 4; j++) {
-//         var td = document.createElement('TD');
-//         td.width = '75';
-//         td.appendChild(document.createTextNode("Cell " + i + "," + j));
-//         tr.appendChild(td);
-//     }
-//});
-
-//myTableDiv.appendChild(table);
 
 //display graphs
 function displayGraphs(graph) {
@@ -873,14 +779,6 @@ function dashboardPowerStats(superhero) {
     console.log(stats_keys)
     stats_values = Object.values(superStats)
     console.log(stats_values)
-
-    // markerColor = '';
-    // if(stats_values > 75){
-    //     markerColor = 'Red';   
-    // } else {
-    //     markerColor = "Orange";
-    // }
-
 
     var trace1 = {
         //labels: '',
@@ -929,7 +827,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${_.startCase(key)}:</strong> ${value}`));
 
 }
 
@@ -944,7 +842,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${_.startCase(key)}: </strong> ${value}`));
 
 }
 
@@ -959,7 +857,7 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${_.startCase(key)}:</strong> ${value}`));
 
 }
 
