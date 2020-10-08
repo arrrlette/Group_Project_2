@@ -771,10 +771,6 @@ function characterChange(superhero) {
 //PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    //console.log(superStats)
-    // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
-    //     var powerStats_data = powerStats.response
-    //     console.log(powerStats_data)
     stats_keys = Object.keys(superStats)
     console.log(stats_keys)
     stats_values = Object.values(superStats)
@@ -787,10 +783,10 @@ function dashboardPowerStats(superhero) {
         y: stats_keys,
         orientation: 'h',
         text: stats_values.map(String),
-        textposition: 'auto'
-        // marker: {
-        //     color: markerColor,
-        // }
+        textposition: 'auto',
+        marker:{
+            color: ['#73BA00', '#F4DD2D', '#EB8828', '#C11724', '#801C50', '#52194F']
+        }
     };
     var data = [trace1];
 
