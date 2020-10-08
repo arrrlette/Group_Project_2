@@ -15,7 +15,7 @@ d3.request("http://127.0.0.1:5000/").get(response => {
 })
 
 
-
+// create the initial function----------
 function init(names) {
 
     //---------------------- CHARACTER INIT SECTION--------------------
@@ -28,7 +28,7 @@ function init(names) {
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);
     });
-
+//-----battle portion of init
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
@@ -685,47 +685,106 @@ function work(superhero) {
 
 function battleChange1(superhero) {
     battleImages1(superhero);
+    battlePowerStats(superhero, "battlePowerStats1");
+    
+    
     // calcStats(superhero);
     player1 = calcStats(superhero);
-    //console.log(player1)
+    console.log(player1)
+
+    player1name = superheroes.filter(x => x.name === superhero)[0].name;
+    console.log(player1name)
+
+    image = superheroes.filter(x => x.name === superhero)[0].images;
+    imageObject = Object.values(image);
+    player1Image = imageObject[1]
+    console.log(player1Image)
 
 };
 
 function battleChange2(superhero) {
     battleImages2(superhero);
-    calcStats(superhero);
+    battlePowerStats(superhero, "battlePowerStats2");
+    
+    
+    
+    // calcStats(superhero);
     player2 = calcStats(superhero);
-    //console.log(player2);
+    console.log(player2)
+
+    player2name = superheroes.filter(x => x.name === superhero)[0].name;
+    console.log(player2name)
+
+    image = superheroes.filter(x => x.name === superhero)[0].images;
+    imageObject = Object.values(image);
+    player2Image = imageObject[1]
+    console.log(player2Image)
+
 };
 
 function battleWinner() {
-    
+
     var winner;
+    var winnerPic;
+
+    // image for a tie
+    image = superheroes.filter(x => x.name === "Chuck Norris")[0].images;
+    imageObject = Object.values(image);
+    tieImage = imageObject[1];
+    console.log(tieImage);
+
+
+
     if (player1 > player2) {
-        winner = "Fighter 1";
+        winner = `${player1name}`,
+        winnerPic = player1Image
     }
 
     else if (player1 < player2) {
-        winner = "Fighter 2"
+        winner = `${player2name}`,
+        winnerPic = player2Image
     }
 
-    else { winner = "Tie" }
+    else { 
+        winner = "It's a Tie. Chuck Norris",
+        winnerPic = tieImage
+    };
 
 
     //console.log(winner)
     
     return Swal.fire({
-        title: `${winner} is the winner! Go get 'em cowboy`,
-        text: "Time for another battle",
-        width: 600,
-        padding: '3em',
-        background: `#fff url(https://media3.giphy.com/media/10bKPDUM5H7m7u/giphy.gif) center`,
+        // title: `${winner} is the winner! Go get 'em cowboy`,
+        // text: "Time for another battle",
+        // width: 600,
+        // padding: '3em',
+        // background: `#fff url(https://media3.giphy.com/media/10bKPDUM5H7m7u/giphy.gif) center`,
+        // // imageUrl: 'player1Image',
+        // backdrop: `
+        //     rgba(255,82,71,0.4)
+        //     top center
+        //     no-repeat
+        // `
+
+
+        title: `${winner} is the winner!`,
+        text: 'Click to battle again',
+        // imageUrl: 'https://unsplash.it/400/200',
+        
+        imageUrl: `${winnerPic}`,
+        imageWidth: 400,
+        imageHeight: 400,
+        imageAlt: 'Custom image',  
         backdrop: `
-          rgba(255,82,71,0.4)
-          top center
-          no-repeat
-        `
+            rgba(255,82,71,0.4)
+            url(https://tech4mag.com/wp-content/uploads/2020/03/1583577776_253_Want-To-Remove-Background-from-A-GIF-Or-Video-Try-Unscreen.gif)
+            bottom left
+            no-repeat
+            `
+        
+
     })
+
 
 };
 
@@ -761,5 +820,41 @@ function calcStats(superhero){
     return sumStats;
 
 }
+
+function battlePowerStats(superhero, htmlTag) {
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+
+    stats_keys = Object.keys(superStats)
+    // console.log(stats_keys)
+    stats_values = Object.values(superStats)
+    // console.log(stats_values)
+
+
+    var trace1 = {
+        //labels: '',
+        type: 'bar',
+        x: stats_values,
+        y: stats_keys,
+        orientation: 'h',
+        text: stats_values.map(String),
+        textposition: 'auto',
+
+
+    };
+
+    var data = [trace1];
+
+    var layout = {
+        xaxis: {
+            range: [1, 100],
+        }
+    };
+
+    Plotly.newPlot(htmlTag, data, layout);
+}
+
+
+
+
 
 //========================End Battle section============================

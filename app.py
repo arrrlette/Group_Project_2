@@ -142,7 +142,7 @@ def eyeColor():
         }},
         {"$replaceRoot": {
             "newRoot": {"$arrayToObject": "$counts"}
-        }}         
+        }}
     ]))
 
     eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
