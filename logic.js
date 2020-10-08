@@ -781,11 +781,7 @@ function battleWinner() {
             bottom left
             no-repeat
             `
-        
-
     })
-
-
 };
 
 
@@ -852,9 +848,5 @@ function battlePowerStats(superhero, htmlTag) {
 
     Plotly.newPlot(htmlTag, data, layout);
 }
-
-
-
-
 
 //========================End Battle section============================
