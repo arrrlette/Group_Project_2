@@ -19,7 +19,7 @@ d3.request("http://127.0.0.1:5000/").get(response => {
 })
 
 
-
+// create the initial function----------
 function init(names) {
 
     //---------------------- CHARACTER INIT SECTION--------------------
@@ -31,6 +31,7 @@ function init(names) {
         dropDown.append('option').text(name).property('value', name);
     });
 
+//-----battle portion of init
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
 
@@ -141,6 +142,7 @@ function genderPie() {
             autosize: false,
             width: 350,
             height: 550,
+
             margin: {
                 l: 50,
                 r: 50,
@@ -466,7 +468,6 @@ function alignmentPie() {
             plot_bgcolor: '#66CCFF'
         };
         Plotly.newPlot("plot3", data, layout);
-
     });
 
     //powerstatlabels
@@ -513,7 +514,6 @@ function alignmentPie() {
     var myTableDiv = document.getElementById("card-container");
 
     console.log(myTableDiv)
-
     //default stat hero list to combat heroes
     build_list(myTableDiv, combat_list, combat_pics);
 
@@ -587,7 +587,6 @@ function alignmentPie() {
 
     }, false);
 
-
 };
 
 //display graphs
@@ -624,14 +623,6 @@ function dashboardPowerStats(superhero) {
     stats_values = Object.values(superStats)
     console.log(stats_values)
 
-    // markerColor = '';
-    // if(stats_values > 75){
-    //     markerColor = 'Red';   
-    // } else {
-    //     markerColor = "Orange";
-    // }
-
-
     var trace1 = {
         //labels: '',
         type: 'bar',
@@ -647,7 +638,6 @@ function dashboardPowerStats(superhero) {
     var data = [trace1];
 
 
-
     var layout = {
         title: "PowerStats",
         xaxis: {
@@ -659,12 +649,11 @@ function dashboardPowerStats(superhero) {
 
 
 function dashboardCharImage(superhero) {
+
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
-    //console.log(charImages);
 
     image = Object.values(charImages);
-    //console.log(image[0]);
-
+    
     d3.select(".charImage>img").attr("src", image[2]);
 }
 
@@ -679,7 +668,7 @@ function dashboardApp(superhero) {
     appHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(superApp).forEach(([key, value]) => appHTML.append("h6").html(`<strong>${_.startCase(key)}:</strong> ${value}`));
 
 }
 
@@ -694,7 +683,7 @@ function biography(superhero) {
     bioHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(biography).forEach(([key, value]) => bioHTML.append("h6").html(`<strong>${_.startCase(key)}: </strong> ${value}`));
 
 }
 
@@ -709,7 +698,7 @@ function work(superhero) {
     workHTML.html("")
 
     //appends each key and value in the metaData to the html
-    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").text(`${key}: ${value}`));
+    Object.entries(work).forEach(([key, value]) => workHTML.append("h6").html(`<strong>${_.startCase(key)}:</strong> ${value}`));
 
 }
 
@@ -719,8 +708,6 @@ function work(superhero) {
 function battleChange1(superhero) {
     battleImages1(superhero);
     battlePowerStats(superhero, "battlePowerStats1");
-
-
     // calcStats(superhero);
     player1 = calcStats(superhero);
     console.log(player1)
@@ -736,8 +723,6 @@ function battleChange1(superhero) {
 function battleChange2(superhero) {
     battleImages2(superhero);
     battlePowerStats(superhero, "battlePowerStats2");
-
-
 
     // calcStats(superhero);
     player2 = calcStats(superhero);
@@ -768,31 +753,30 @@ function battleWinner() {
 
     if (player1 > player2) {
         winner = `${player1name}`,
-            winnerPic = player1Image
+        winnerPic = player1Image
     }
 
     else if (player1 < player2) {
         winner = `${player2name}`,
-            winnerPic = player2Image
+        winnerPic = player2Image
 
     }
 
     else {
         winner = "It's a Tie. Chuck Norris",
-            winnerPic = tieImage
+        winnerPic = tieImage
     };
-
 
     // calling the alert
     return Swal.fire({
 
         title: `${winner} is the winner!`,
         text: 'Click to battle again',
-
+        
         imageUrl: `${winnerPic}`,
         imageWidth: 400,
         imageHeight: 400,
-        imageAlt: 'Custom image',
+        imageAlt: 'Custom image',  
         backdrop: `
             rgba(255,82,71,0.4)
             url(https://tech4mag.com/wp-content/uploads/2020/03/1583577776_253_Want-To-Remove-Background-from-A-GIF-Or-Video-Try-Unscreen.gif)
@@ -801,7 +785,6 @@ function battleWinner() {
             `
     })
 };
-
 
 
 function battleImages1(superhero) {
@@ -854,7 +837,7 @@ function battlePowerStats(superhero, htmlTag) {
         orientation: 'h',
         text: stats_values.map(String),
         textposition: 'auto',
-        marker: {
+        marker:{
             color: ['#73BA00', '#F4DD2D', '#EB8828', '#C11724', '#801C50', '#52194F']
         }
     };
@@ -870,6 +853,3 @@ function battlePowerStats(superhero, htmlTag) {
     Plotly.newPlot(htmlTag, data, layout);
 }
 
-
-
-//========================End Battle section============================
