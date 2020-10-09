@@ -26,8 +26,6 @@ function init(names) {
     //select html for character dropdown
     var dropDown = d3.select('#selDataset');
 
-    // console.log(jsonData);
-
     //add names to character selection drop down
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);
@@ -41,7 +39,6 @@ function init(names) {
         battleDropdowns.append('option').text(name).property('value', name);
     });
 
-
     //select html for second character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset3');
 
@@ -50,7 +47,6 @@ function init(names) {
         // --------------------END BATTLE INIT SECTION-------------------------
         battleDropdowns.append('option').text(name).property('value', name);
     });
-
 
     //function to call initial display on html
     genderPie(); //to display gender pie chart on init
@@ -63,14 +59,11 @@ function init(names) {
 //function to sort values for dashboard pie charts
 function sortByValue(hair) {
     var hairArray = [];
-    console.log(typeof (hair))
+
     for (const [key, value] of Object.entries(hair)) {
-        console.log("Key ", key);
-        console.log("value ", value);
         hairArray.push([key, value])
     }
 
-    console.log(hairArray);
     sortedArray = hairArray.sort((firstNum, secondNum) => secondNum[1] - firstNum[1]);
 
     return sortedArray;
@@ -82,7 +75,7 @@ function build_list(myTableDiv, statherolist, heropics) {
     for (var i = 0; i < statherolist.length; i++) {
 
         let col = document.createElement('div');
-        col.className =  "col-md-2";
+        col.className = "col-md-2";
 
         let card = document.createElement('div');
         card.className = 'shdbcard class-5';
@@ -92,12 +85,12 @@ function build_list(myTableDiv, statherolist, heropics) {
 
         var title = document.createElement('span');
         title.className = 'shdbcard-title';
-        title.innerText =  statherolist[i] 
+        title.innerText = statherolist[i];
         title.style = "font-weight: bold;"
 
         var cardimg = document.createElement('img')
-        cardimg.src = heropics[i]; 
-        
+        cardimg.src = heropics[i];
+
         cardinfo.appendChild(cardimg)
         cardinfo.appendChild(title)
         card.appendChild(cardinfo)
@@ -123,12 +116,12 @@ function genderPie() {
     appHTML.html("")
 
     d3.request("http://127.0.0.1:5000/gender").get(gender => {
-        // console.log(JSON.parse(gender.response));
+
         var gender_data = JSON.parse(gender.response)
 
-        // console.log(gender_data) 
+
         gender_plot = Object.values(gender_data[0])
-        // console.log(gender_plot)
+
         //capture labels for gender pie
         gender_keys = Object.keys(gender_data[0])
 
@@ -147,7 +140,7 @@ function genderPie() {
             legend: { "orientation": "h" },
             autosize: false,
             width: 350,
-            height: 500,
+            height: 550,
             margin: {
                 l: 50,
                 r: 50,
@@ -171,8 +164,6 @@ function genderPie() {
 
         //call function to sort hair color values
         sortedhair = sortByValue(hair_data[0]);
-        console.log(sortedhair)
-
 
         var top_10_hair = sortedhair.slice(0, 10)
         var topHairValue = []
@@ -197,7 +188,7 @@ function genderPie() {
             legend: { "orientation": "h" },
             autosize: false,
             width: 350,
-            height: 500,
+            height: 550,
             margin: {
                 l: 50,
                 r: 50,
@@ -233,8 +224,7 @@ function genderPie() {
         })
 
 
-        // //plotly code for eye color pie chart
-
+        //plotly code for eye color pie chart
         var trace3 = {
             labels: topeyeKey,
             values: topeyeValue,
@@ -249,7 +239,7 @@ function genderPie() {
             legend: { "orientation": "h" },
             autosize: false,
             width: 350,
-            height: 500,
+            height: 550,
             margin: {
                 l: 50,
                 r: 50,
@@ -305,68 +295,61 @@ function alignmentPie() {
         alignment = Object.values(hero.biography.alignment[0])
         alignment_value = alignment[0]
         combat = stats[0]
-        //console.log(combat)
-        durability = stats[1]
-        //console.log(durability)
-        intelligence = stats[2]
-        //console.log(intelligence)
-        power = stats[3]
-        //console.log(power)
-        speed = stats[4]
-        //console.log(speed)
-        strength = stats[5]
-        //console.log(strength)
 
-        if (combat >= durability && combat >= intelligence &&
-            combat >= power && combat >= speed && combat >= strength ) {
+        durability = stats[1]
+
+        intelligence = stats[2]
+
+        power = stats[3]
+
+        speed = stats[4]
+
+        strength = stats[5]
+
+        if (combat == 100 || combat >= durability && combat >= intelligence &&
+            combat >= power && combat >= speed && combat >= strength) {
 
             combat_count++;
             combat_list.push(hero.name)
             combat_pics.push(image[2])
 
-        } else if (durability >= combat && durability >= intelligence &&
-            durability >= power && durability >= speed && durability >= strength || durability == 100) {
+        } if (durability == 100 || durability >= combat && durability >= intelligence &&
+            durability >= power && durability >= speed && durability >= strength) {
 
             durability_count++;
             durability_list.push(hero.name)
             durability_pics.push(image[2])
 
 
-        } else if (intelligence >= combat && intelligence >= durability &&
-            intelligence >= power && intelligence >= speed && intelligence >= strength || intelligence == 100) {
+        } if (intelligence == 100 || intelligence >= combat && intelligence >= durability &&
+            intelligence >= power && intelligence >= speed && intelligence >= strength) {
 
             intelligence_count++;
             intelligence_list.push(hero.name)
             intelligence_pics.push(image[2])
 
-        } else if (power >= combat && power >= durability &&
+        } if (power == 100 || power >= combat && power >= durability &&
             power >= intelligence && power >= speed && power >= strength || power == 100) {
 
             power_count++;
             power_list.push(hero.name)
             power_pics.push(image[2])
 
-        } else if (speed >= combat && speed >= durability &&
-            speed >= intelligence && speed >= power && speed >= strength || speed == 100) {
+        } if (speed == 100 || speed >= combat && speed >= durability &&
+            speed >= intelligence && speed >= power && speed >= strength) {
 
             speed_count++;
             speed_list.push(hero.name)
             speed_pics.push(image[2])
 
-        } else {
+        } if (strength == 100 || strength >= combat && strength >= durability &&
+            strength >= intelligence && strength >= power && strength >= speed) {
 
             strength_count++;
             strength_list.push(hero.name)
             strength_pics.push(image[2])
 
-        }
-
-        
-
-
-        //console.log(stats)
-        //console.log(combat)
-        //console.log(alignment_value)
+        };
 
         //fill alignment values for pie chart
         if (alignment == "g") {
@@ -377,17 +360,7 @@ function alignmentPie() {
         } else {
             bad_count++;
 
-        }
-
-        //console.log(combat_list)
-        // /console.log(durability_list)
-        // console.log(intelligence_list)
-        // console.log(power_list)
-        // console.log(speed_list)
-        // console.log(strength_list)
-        // console.log(combat_pics)
-        // console.log(strength_pics)
-        // console.log(good_count + "," + bad_count)
+        };
 
     });
 
@@ -406,7 +379,7 @@ function alignmentPie() {
         legend: { "orientation": "h" },
         autosize: false,
         width: 350,
-        height: 500,
+        height: 550,
         margin: {
             l: 50,
             r: 50,
@@ -418,8 +391,6 @@ function alignmentPie() {
         plot_bgcolor: '#FFFF00'
     };
     Plotly.newPlot("plot", data, layout);
-
-
 
     //plotly code for alignment pie chart
     var trace1 = {
@@ -436,7 +407,7 @@ function alignmentPie() {
         legend: { "orientation": "h" },
         autosize: false,
         width: 350,
-        height: 500,
+        height: 550,
         margin: {
             l: 50,
             r: 50,
@@ -474,7 +445,8 @@ function alignmentPie() {
         var trace1 = {
             labels: topuniverseKey,
             values: topuniverseValue,
-            type: 'pie'
+            type: 'pie',
+            rotation: 45
         };
         var data = [trace1];
         var layout = {
@@ -482,7 +454,7 @@ function alignmentPie() {
             showlegend: true,
             legend: { "orientation": "h" },
             width: 350,
-            height: 500,
+            height: 550,
             margin: {
                 l: 50,
                 r: 50,
@@ -500,18 +472,6 @@ function alignmentPie() {
     //powerstatlabels
     const alignmentsuperStats = superheroes[0].powerstats;
     powerstat_labels = Object.keys(alignmentsuperStats);
-
-    //code to dynamically create primary stat dropdown
-    //var well = document.createElement("div");
-
-    // //well.innerHTML = '<div class="well">' +
-    //     '<div class="panel-heading">' +
-    //     '<h3 class="panel-title">Heroes/Villains</h3>' + '</div>' +
-    //     '<div id="primarystatlist" class="panel-body">' +
-    //     '<div id="myDynamicTable">' + '</div>' +
-    //     '</div>' + '</div>'
-
-    //mypanelDiv.appendChild(panel);
 
     var select = document.createElement("select");
     select.name = "Primary Stat";
@@ -554,18 +514,8 @@ function alignmentPie() {
 
     console.log(myTableDiv)
 
-
-
     //default stat hero list to combat heroes
     build_list(myTableDiv, combat_list, combat_pics);
-
-
-
-    //add combat heroes by default on initial load
-    //appends each combat hero name to the panel
-    //combat_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
-
 
     mypanelDiv.appendChild(panel);
 
@@ -579,8 +529,6 @@ function alignmentPie() {
         selected_value = event.target.value
         console.log(selected_value);
 
-
-        //var myTableDiv = document.getElementById("speedlist");
         //select html for panel table and clear out
         var tableHTML = d3.select("#card-container");
         console.log(tableHTML)
@@ -588,67 +536,46 @@ function alignmentPie() {
         //to only show current data called
         tableHTML.html("")
 
-
         //switch statement to populate superheroes based on primary stat selected
         switch (selected_value) {
             case "combat":
 
-                //console.log(combat_list)
-                //appends each key and value in the metaData to the html
-                //combat_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
+                //build combat hero panel
                 build_list(myTableDiv, combat_list, combat_pics)
 
                 break;
 
             case "durability":
 
-                console.log(durability_list)
-                //appends each key and value in the metaData to the html
-                //durability_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
+                //build durability hero panel
                 build_list(myTableDiv, durability_list, durability_pics)
 
                 break;
 
             case "intelligence":
 
-                console.log(intelligence_list)
-                //appends each key and value in the metaData to the html
-                //intelligence_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
+                //build intelligence hero panel
                 build_list(myTableDiv, intelligence_list, intelligence_pics)
 
                 break;
 
             case "power":
 
-                console.log(power_list)
-                //appends each key and value in the metaData to the html
-                //power_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
+                //build power hero panel
                 build_list(myTableDiv, power_list, power_pics)
 
                 break;
 
             case "speed":
 
-                console.log(speed_list)
-                // appends each key and value in the metaData to the html
-                // speed_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
-
+                //build speed hero panel
                 build_list(myTableDiv, speed_list, speed_pics, speed_pics);
-
 
                 break;
 
             case "strength":
 
-                console.log(strength_list)
-                //appends each key and value in the metaData to the html
-                //strength_list.map((item) => appHTML.append("h6").html(`<strong>${item}`));
-
+                //build strength hero panel
                 build_list(myTableDiv, strength_list, strength_pics)
 
                 break;
@@ -660,88 +587,8 @@ function alignmentPie() {
 
     }, false);
 
-    //universe dropdown
-    // var uselect = document.createElement("select");
-    // uselect.name = "Universe";
-    // uselect.id = "universe"
 
-    // console.log(topuniverseKey)
-    // for (const val of topuniverseKey) {
-    //     var option = document.createElement("option");
-    //     option.value = val;
-    //     option.text = val.charAt(0).toUpperCase() + val.slice(1);
-    //     uselect.appendChild(option);
-    // }
-
-    // var ulabel = document.createElement("label");
-    // ulabel.innerHTML = "Choose Universe: "
-    // ulabel.htmlFor = "universe";
-
-    // document.getElementById("universepanel").appendChild(ulabel).appendChild(uselect);
-
-    // //code to grab when a primary stat is selected from the dropdown
-    // document.addEventListener('input', function (event) {
-
-    //     // Only run on our select menu
-    //     if (event.target.id !== 'universe') return;
-
-    //     // The selected value
-    //     selected_universe = event.target.value
-    //     console.log(selected_universe);
-
-
-
-
-    // }, false);
-}
-
-//speed_pics.map((item) =>
-
-//var myTableDiv = document.getElementById("myDynamicTable");
-
-//console.log(myTableDiv)
-
-// var table = document.createElement('TABLE');
-// table.border = '1';
-
-// var tableBody = document.createElement('TBODY');
-// table.appendChild(tableBody);
-
-// // Use `Object.values` and `forEach` to iterate through values
-// Object.values(speed_list).forEach(value => {
-
-//     console.log(value);
-
-//     var tr = document.createElement('TR');
-//     tableBody.appendChild(tr);
-
-//     //hero name field
-//     var td = document.createElement('TD');
-//     td.width = '200';
-//     td.appendChild(document.createTextNode(value))
-//     tr.appendChild(td);
-
-// });
-
-// // Use `Object.values` and `forEach` to iterate through values
-// Object.values(speed_pics).forEach(value => {
-
-//     console.log(value);
-//     //hero image field
-//     var td = document.createElement('TD');
-//     td.width = '200';
-//     td.appendChild(document.createTextNode(value))
-//     tr.appendChild(td);
-
-//     for (var j = 0; j < 4; j++) {
-//         var td = document.createElement('TD');
-//         td.width = '75';
-//         td.appendChild(document.createTextNode("Cell " + i + "," + j));
-//         tr.appendChild(td);
-//     }
-//});
-
-//myTableDiv.appendChild(table);
+};
 
 //display graphs
 function displayGraphs(graph) {
@@ -753,7 +600,7 @@ function displayGraphs(graph) {
     else if (graph === "alignment") {
         alignmentPie();
     }
-}
+};
 
 //========================End Dashboard section=========================
 
@@ -772,10 +619,6 @@ function characterChange(superhero) {
 //PowerStats function
 function dashboardPowerStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
-    //console.log(superStats)
-    // d3.request("http://127.0.0.1:5000//powerStats/" + superhero).get(powerStats => {
-    //     var powerStats_data = powerStats.response
-    //     console.log(powerStats_data)
     stats_keys = Object.keys(superStats)
     console.log(stats_keys)
     stats_values = Object.values(superStats)
@@ -796,10 +639,10 @@ function dashboardPowerStats(superhero) {
         y: stats_keys,
         orientation: 'h',
         text: stats_values.map(String),
-        textposition: 'auto'
-        // marker: {
-        //     color: markerColor,
-        // }
+        textposition: 'auto',
+        marker: {
+            color: ['#73BA00', '#F4DD2D', '#EB8828', '#C11724', '#801C50', '#52194F']
+        }
     };
     var data = [trace1];
 
@@ -875,35 +718,88 @@ function work(superhero) {
 
 function battleChange1(superhero) {
     battleImages1(superhero);
+    battlePowerStats(superhero, "battlePowerStats1");
+
+
     // calcStats(superhero);
     player1 = calcStats(superhero);
     console.log(player1)
+    player1name = superheroes.filter(x => x.name === superhero)[0].name;
+    console.log(player1name)
 
+    image = superheroes.filter(x => x.name === superhero)[0].images;
+    imageObject = Object.values(image);
+    player1Image = imageObject[1]
+    console.log(player1Image)
 };
 
 function battleChange2(superhero) {
     battleImages2(superhero);
-    calcStats(superhero);
+    battlePowerStats(superhero, "battlePowerStats2");
+
+
+
+    // calcStats(superhero);
     player2 = calcStats(superhero);
-    console.log(player2);
+    console.log(player2)
+
+    player2name = superheroes.filter(x => x.name === superhero)[0].name;
+    console.log(player2name)
+
+    image = superheroes.filter(x => x.name === superhero)[0].images;
+    imageObject = Object.values(image);
+    player2Image = imageObject[1]
+    console.log(player2Image)
+
 };
 
 function battleWinner() {
+
     var winner;
+    var winnerPic;
+
+    // image for a tie
+    image = superheroes.filter(x => x.name === "Chuck Norris")[0].images;
+    imageObject = Object.values(image);
+    tieImage = imageObject[1];
+    console.log(tieImage);
+
+
+
     if (player1 > player2) {
-        winner = "Player1 Wins";
+        winner = `${player1name}`,
+            winnerPic = player1Image
     }
 
     else if (player1 < player2) {
-        winner = "Player2 Wins"
+        winner = `${player2name}`,
+            winnerPic = player2Image
+
     }
 
-    else { winner = "Tie" }
+    else {
+        winner = "It's a Tie. Chuck Norris",
+            winnerPic = tieImage
+    };
 
 
-    console.log(winner)
-    return winner;
+    // calling the alert
+    return Swal.fire({
 
+        title: `${winner} is the winner!`,
+        text: 'Click to battle again',
+
+        imageUrl: `${winnerPic}`,
+        imageWidth: 400,
+        imageHeight: 400,
+        imageAlt: 'Custom image',
+        backdrop: `
+            rgba(255,82,71,0.4)
+            url(https://tech4mag.com/wp-content/uploads/2020/03/1583577776_253_Want-To-Remove-Background-from-A-GIF-Or-Video-Try-Unscreen.gif)
+            bottom left
+            no-repeat
+            `
+    })
 };
 
 
@@ -928,8 +824,7 @@ function battleImages2(superhero) {
 function calcStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
     stats_values = Object.values(superStats)
-    // console.log(stats_values)
-    // totalStats = 0;
+
 
     //getting sum of numbers
     sumStats = stats_values.reduce(function (a, b) {
@@ -941,5 +836,40 @@ function calcStats(superhero) {
     return sumStats;
 
 }
+
+function battlePowerStats(superhero, htmlTag) {
+    const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
+
+    stats_keys = Object.keys(superStats)
+    // console.log(stats_keys)
+    stats_values = Object.values(superStats)
+    // console.log(stats_values)
+
+
+    var trace1 = {
+        //labels: '',
+        type: 'bar',
+        x: stats_values,
+        y: stats_keys,
+        orientation: 'h',
+        text: stats_values.map(String),
+        textposition: 'auto',
+        marker: {
+            color: ['#73BA00', '#F4DD2D', '#EB8828', '#C11724', '#801C50', '#52194F']
+        }
+    };
+
+    var data = [trace1];
+
+    var layout = {
+        xaxis: {
+            range: [1, 100],
+        }
+    };
+
+    Plotly.newPlot(htmlTag, data, layout);
+}
+
+
 
 //========================End Battle section============================
