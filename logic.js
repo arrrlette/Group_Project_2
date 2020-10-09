@@ -425,7 +425,7 @@ function alignmentPie() {
 
         //call function to sort hair color values
         sorteduniverse = sortByValue(universe_data[0]);
-        //console.log(sorteduniverse)
+        console.log(sorteduniverse)
 
 
         var top_10_universe = sorteduniverse.slice(0, 10)
