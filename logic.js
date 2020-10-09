@@ -792,7 +792,6 @@ function dashboardPowerStats(superhero) {
     var data = [trace1];
 
 
-
     var layout = {
         title: "PowerStats",
         xaxis: {
@@ -804,12 +803,11 @@ function dashboardPowerStats(superhero) {
 
 
 function dashboardCharImage(superhero) {
+
     const charImages = superheroes.filter(x => x.name === superhero)[0].images
-    //console.log(charImages);
 
     image = Object.values(charImages);
-    //console.log(image[0]);
-
+    
     d3.select(".charImage>img").attr("src", image[2]);
 }
 
@@ -927,11 +925,12 @@ function battleWinner() {
         winnerPic = tieImage
     };
 
+
+    // calling the alert
     return Swal.fire({
 
         title: `${winner} is the winner!`,
         text: 'Click to battle again',
-        // imageUrl: 'https://unsplash.it/400/200',
         
         imageUrl: `${winnerPic}`,
         imageWidth: 400,
@@ -945,7 +944,6 @@ function battleWinner() {
             `
     })
 };
-
 
 
 function battleImages1(superhero) {
@@ -968,8 +966,7 @@ function battleImages2(superhero) {
 function calcStats(superhero) {
     const superStats = superheroes.filter(x => x.name === superhero)[0].powerstats;
     stats_values = Object.values(superStats)
-    // console.log(stats_values)
-    // totalStats = 0;
+
 
     //getting sum of numbers
     sumStats = stats_values.reduce(function (a, b) {
