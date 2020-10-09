@@ -31,6 +31,7 @@ function init(names) {
     names.forEach((name) => {
         dropDown.append('option').text(name).property('value', name);
     });
+
 //-----battle portion of init
     //select html for first character dropdown in battle section
     var battleDropdowns = d3.select('#selDataset2');
@@ -232,7 +233,7 @@ function genderPie() {
             showlegend: true,
             legend: { "orientation": "h" },
             autosize: false,
-            width: 400,
+            width: 350,
             height: 500,
             margin: {
                 l: 50,
@@ -282,7 +283,7 @@ function genderPie() {
             showlegend: true,
             legend: { "orientation": "h" },
             autosize: false,
-            width: 400,
+            width: 350,
             height: 500,
             margin: {
                 l: 50,
@@ -334,7 +335,7 @@ function genderPie() {
             showlegend: true,
             legend: { "orientation": "h" },
             autosize: false,
-            width: 400,
+            width: 350,
             height: 500,
             margin: {
                 l: 50,
@@ -494,7 +495,7 @@ function alignmentPie() {
         showlegend: true,
         legend: { "orientation": "h" },
         autosize: false,
-        width: 400,
+        width: 350,
         height: 500,
         margin: {
             l: 50,
@@ -524,7 +525,7 @@ function alignmentPie() {
         showlegend: true,
         legend: { "orientation": "h" },
         autosize: false,
-        width: 400,
+        width: 350,
         height: 500,
         margin: {
             l: 50,
@@ -570,7 +571,7 @@ function alignmentPie() {
             title: "Hero Universes",
             showlegend: true,
             legend: { "orientation": "h" },
-            width: 400,
+            width: 350,
             height: 500,
             margin: {
                 l: 50,
