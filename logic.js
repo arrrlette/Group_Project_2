@@ -995,7 +995,9 @@ function battlePowerStats(superhero, htmlTag) {
         orientation: 'h',
         text: stats_values.map(String),
         textposition: 'auto',
-
+        marker:{
+            color: ['#73BA00', '#F4DD2D', '#EB8828', '#C11724', '#801C50', '#52194F']
+        }
 
     };
 

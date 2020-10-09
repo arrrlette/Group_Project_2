@@ -404,7 +404,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100vh;
   position: relative;
   /* background: url("../img/hero-bg.jpg") top center; */
-  
+  background: url("../img/characters/battle1.jpg") top center;
   /* background: url("../img/characters/gotham3.jpg") top center; */
   background-size: cover;
   position: relative;
@@ -538,6 +538,7 @@ section {
 .section-bg {
   background-color:white;
   /* add image here if you want it in background */
+  /* background: url("../img/hero-bg.jpg") top center; */
 }
 
 .section-title {
