@@ -8,8 +8,13 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.well {
+  font-family: 'BadaBoom BB', arial;
+  background-color: #2487ce;
+}
+
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'BadaBoom BB', arial;
   color: #444444;
 }
 
@@ -23,7 +28,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: 'BadaBoom BB', arial;
 }
 
 /*--------------------------------------------------------------
@@ -134,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1;
   font-weight: 300;
   letter-spacing: 0.5px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'BadaBoom BB', arial;
 }
 
 #header .logo a {
@@ -177,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #124265;
   transition: 0.3s;
   font-size: 14px;
-  font-family: "Open Sans", sans-serif;
+  font-family:'BadaBoom BB', arial;
 }
 
 .nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
@@ -245,7 +250,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-menu .drop-down .drop-down > a:after {
   content: "\eaa0";
-  font-family: IcoFont;
+  font-family:'BadaBoom BB', arial;
   position: absolute;
   right: 15px;
 }
@@ -441,7 +446,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #hero .btn-get-started {
-  font-family: "Poppins", sans-serif;
+  font-family: 'BadaBoom BB', arial;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.5px;
@@ -596,7 +601,7 @@ section {
 }
 
 .about .content .btn-learn-more {
-  font-family: "Raleway", sans-serif;
+  font-family: 'BadaBoom BB', arial;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 1px;
@@ -1152,7 +1157,7 @@ section {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
-  font-family: "Raleway", sans-serif;
+  font-family:'BadaBoom BB', arial;
   color: #777777;
 }
 
@@ -1277,3 +1282,4 @@ section {
   color: #fff;
   text-decoration: none;
 }
+
