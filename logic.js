@@ -98,7 +98,6 @@ function build_list(myTableDiv, statherolist, heropics) {
 
         myTableDiv.appendChild(col);
 
-        console.log(myTableDiv)
     };
 
 };
@@ -158,10 +157,7 @@ function genderPie() {
     });
 
     d3.request("http://127.0.0.1:5000/hairColor").get(hairColor => {
-
         var hair_data = JSON.parse(hairColor.response)
-
-
         //call function to sort hair color values
         sortedhair = sortByValue(hair_data[0]);
 
@@ -179,7 +175,6 @@ function genderPie() {
             values: topHairValue,
             type: 'pie'
         };
-
         var data = [trace2];
 
         var layout = {
@@ -435,7 +430,7 @@ function alignmentPie() {
 
         var top_10_universe = sorteduniverse.slice(0, 10)
         var topuniverseValue = []
-        //var topuniverseKey = []
+        var topuniverseKey = []
         top_10_universe.forEach(item => {
             topuniverseValue.push(item[1])
             topuniverseKey.push(item[0])
@@ -444,6 +439,7 @@ function alignmentPie() {
         //plotly code for gender pie chart
         var trace1 = {
             labels: topuniverseKey,
+            
             values: topuniverseValue,
             type: 'pie',
             rotation: 45
@@ -512,7 +508,7 @@ function alignmentPie() {
 
     var myTableDiv = document.getElementById("card-container");
 
-    console.log(myTableDiv)
+    //console.log(myTableDiv)
 
     //default stat hero list to combat heroes
     build_list(myTableDiv, combat_list, combat_pics);
@@ -586,7 +582,6 @@ function alignmentPie() {
         };
 
     }, false);
-
 
 };
 
