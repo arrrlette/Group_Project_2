@@ -29,6 +29,8 @@ superheroes = mongo.db
 # collection
 
 superdb = mongo.db.supers
+
+superdb = superdb.distinct("name")
 # superheroes.superdb.drop()
 # Or set inline
 #mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
@@ -142,7 +144,7 @@ def eyeColor():
         }},
         {"$replaceRoot": {
             "newRoot": {"$arrayToObject": "$counts"}
-        }}         
+        }}
     ]))
 
     eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
