@@ -27,15 +27,8 @@ mongo = PyMongo(app)
 superheroes = mongo.db
 
 # collection
-
 superdb = mongo.db.supers
-# superheroes.superdb.drop()
-# Or set inline
-#mongo = PyMongo(app, uri="mongodb://localhost:27017/superheroes")
 
-#This is not recommended in production
-# What would happen is every time you visit the root route it would load the DB again with all the data
-#
 @app.route("/", methods=["GET"])
 def index():
     superdb.drop()
@@ -47,9 +40,14 @@ def index():
     responseJson = response.json()
     superdb.insert(responseJson)
 
-    # return render_template("index.html", mars=mars)
+    #update hair color
+    for x in superdb.find({'appearance.hairColor': "Brownn"}):
+        superdb.update_many({'appearance.hairColor': 'Brownn'}, {'$set':{'appearance.hairColor': 'Brown'}})
+    #update eye color
+    for x in superdb.find({'appearance.eyeColor': "Bown"}):
+        superdb.update_many({'appearance.eyeColor': 'Bown'}, {'$set':{'appearance.eyeColor': 'Brown'}})
 
-
+#for Character Profile, 
 @app.route("/allheroes/", methods=['GET'])
 @cross_origin()
 def allheroes():
@@ -58,11 +56,10 @@ def allheroes():
     supersjson = json.loads(json_util.dumps(supers))
     return jsonify(supersjson)
 
-
-@app.route("/findhero/", methods=['GET'])
+#Builds the gener pie chart
 @app.route("/gender/", methods=['GET'])
 def gender():
-
+    
     gendercount = list(superdb.aggregate([
         {"$group": {
             "_id": {"$toLower": "$appearance.gender"},
@@ -82,7 +79,7 @@ def gender():
     gendersjson = json.loads(json_util.dumps(gendercount))
     return jsonify(gendersjson)
 
-
+#builds the Universe pie
 @app.route("/universe/", methods=['GET'])
 def universe():
 
@@ -105,8 +102,10 @@ def universe():
     universejson = json.loads(json_util.dumps(universecount))
     return jsonify(universejson)
 
+#builds the hair color pie
 @app.route("/hairColor/", methods=['GET'])
 def hairColor():
+
     hairColorcount = list(superdb.aggregate([
         {"$group": {
             "_id": {"$toLower": "$appearance.hairColor"},
@@ -126,7 +125,7 @@ def hairColor():
     hairColorjson = json.loads(json_util.dumps(hairColorcount))
     return jsonify(hairColorjson)
 
-
+#builds the eye color pie
 @app.route("/eyeColor/", methods=['GET'])
 def eyeColor():
     eyeColorcount = list(superdb.aggregate([
@@ -148,48 +147,17 @@ def eyeColor():
     eyeColorjson = json.loads(json_util.dumps(eyeColorcount))
     return jsonify(eyeColorjson)
 
+#for the power stats section in the analysis and character section
+# @app.route("/powerStats/<character>", methods=['GET'])
+# def powerStats(character):
 
-@app.route("/powerStats/<character>", methods=['GET'])
-def powerStats(character):
+#     stats = superdb.find_one({"name": character})
 
-    stats = superdb.find_one({"name": character})
+#     # load the json
+#     statsJSON = json.loads(json_util.dumps(stats))
 
-    # load the json
-    statsJSON = json.loads(json_util.dumps(stats))
-
-    powerStats = statsJSON["powerstats"]
-    return jsonify(powerStats)
-
-
-# @app.route("/alignment/", methods=['GET'])
-# def alignment():
-
-    # alignmentcount = list(superdb.aggregate([
-    #   {"$group": {
-    #       "_id": {"$toLower": "$biography.alignment"},
-    #       "count": {"$sum": 1}
-    #  }},
-    #  {"$group": {
-    #      "_id": "null",
-    #      "counts": {
-    #         "$push": {"k": "$_id", "v": "$count"}
-    #    }
-    #  }},
-    #  {"$replaceRoot": {
-    #      "newRoot": {"$arrayToObject": "$counts"}
-    #  }}
-    # ]))
-
-    # good_count = superheroes.superdb.find(
-    # {"biography.alignment": "good"}).count()
-
-    # bad_count = superheroes.superdb.find(
-    # {"biography.alignment": "bad"}).count()
-
-    #alignment_counts = [good_count, bad_count]
-
-    #alignmentjson = json.loads(json_util.dumps(alignment_counts))
-    # return jsonify(alignmentjson)
+#     powerStats = statsJSON["powerstats"]
+#     return jsonify(powerStats)
 
 
 if __name__ == "__main__":

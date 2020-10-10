@@ -4,9 +4,8 @@ let cardContainer; //container for cards on website
 //declare global variable to be able to call anytime for list of universes
 var topuniverseKey = []
 
-//hit home route first, then run all heroes
-//allheroes was responding before the database was populated, 
-// so put allheroes route after the home route that transfers the data 
+
+// allheroes route will populate after the home route that transfers the data 
 // into db. so allheroes wont run until the home route fully runs
 d3.request("http://127.0.0.1:5000/").get(response => {
     d3.request("http://127.0.0.1:5000/allheroes").get(response => {
@@ -17,7 +16,6 @@ d3.request("http://127.0.0.1:5000/").get(response => {
         init(names);
     })
 })
-
 
 
 function init(names) {
@@ -619,16 +617,7 @@ function dashboardPowerStats(superhero) {
     stats_values = Object.values(superStats)
     console.log(stats_values)
 
-    // markerColor = '';
-    // if(stats_values > 75){
-    //     markerColor = 'Red';   
-    // } else {
-    //     markerColor = "Orange";
-    // }
-
-
     var trace1 = {
-        //labels: '',
         type: 'bar',
         x: stats_values,
         y: stats_keys,
@@ -640,7 +629,6 @@ function dashboardPowerStats(superhero) {
         }
     };
     var data = [trace1];
-
 
 
     var layout = {
@@ -827,7 +815,6 @@ function calcStats(superhero) {
     }, 0); //the 0 is the initial value, i.e. the value to use as the first argument to the first call. we want the sum to start at 0.
 
     // console.log(sumStats)
-
     return sumStats;
 
 }
@@ -842,7 +829,6 @@ function battlePowerStats(superhero, htmlTag) {
 
 
     var trace1 = {
-        //labels: '',
         type: 'bar',
         x: stats_values,
         y: stats_keys,
