@@ -43,7 +43,7 @@
   * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
-  * Please note that the template used from Bootstrapmade has been drastically altered. It was used as a starting template.
+  * Please note that the template used from Bootstrapmade has been drastically altered; we are only using barebones foundation code for it. 
   ======================================================== -->
 </head>
 
@@ -64,7 +64,7 @@
           <li><a href="#team">Team</a></li>
         </ul>
       </nav><!-- .nav-menu -->
-
+      <!--Commenting out this button since it is redundant-->
       <!--<a href="#about" class="get-started-btn scrollto">Battle</a>-->
 
     </div>
@@ -139,14 +139,14 @@
 
         <div class="section-title">
           <h2><strong>Dashboard</strong></h2>
-          <p>Please select a graph.
+          <p>Select a graph,fool!
           </p>
         </div>
 
         <div class="row">
           <div class="col-md-12">
             <div class="well" style="background:#337AB7;">
-              <h5><strong>Graphs:</strong></h5>
+              <h5 style="color: white;"><strong>Graphs:</strong></h5>
               <select onchange="displayGraphs(this.value)">
                 <option value="gender">Appearance</option>
                 <option value="alignment">Alignment</option>
@@ -156,24 +156,24 @@
         </div>
         <div class="row">
           <div class="col-md-4">
-            <!-- testing -->
-            <!-- <div id="data"> -->
+
+
             <div id="plot"></div>
-            <!-- testing end -->
+
           </div>
           <div class="col-md-4">
-            <!-- testing -->
-            <!-- <div id="data"> -->
+
             <div id="plot2"></div>
-            <!-- testing end -->
+
           </div>
           <div class="col-md-4">
-            <!-- testing -->
-            <!-- <div id="data"> -->
+
             <div id="plot3"></div>
-            <!-- testing end -->
+            
+
           </div>
         </div>
+        <br><br><hr>
         <div class="row">
           <div class="col-md-12">
             <div id="primarystatpanel"></div>
@@ -188,12 +188,11 @@
     <!-- ======= Portfolio/characters Section ======= -->
     <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
-          <h2 style="color:white"><strong>Characters</strong></h2>
-          <p>This section will display the stats for the selected character. Please select character from the dropdown
-            menu. </p>
+          <h2><strong>Character Profile</strong></h2>
+          <p>This section will display the stats for the selected character. </p>
         </div>
+
 
         <div class="row">
           <div class="col-lg-12 d-flex justify-content-left">
@@ -260,16 +259,16 @@
         <!--Fighter/Battle Section title-->
         <div class="section-title">
           <h2>Battle</h2>
-        
+
           <hr>
           <br>
           <p>Pick your fighters!</p>
-          
+
           <br>
           <button class="btn btn-danger" onclick="battleWinner()">Begin Fight!</button><br>
-          
-          
-          
+
+
+
         </div>
         <!--Row for Character Selections-->
         <div class="row">
@@ -334,7 +333,7 @@
           <h2>Team</h2>
           <p>They traversed their universes for countless decades, wandering, looking for those with equal powers.<br>
             Out of nowhere a cosmic rift opened up and four heroes met. Some say this rift was caused by Project
-            Two...others think it was the Brockwell Stone. 
+            Two...others think it was the Brockwell Stone.
             <br>
             Over time the group fought planet-sized bugs, battled thousands of clones called Jsons, and saved millions
             of Pandas. After years of adventures they banded together and created The Team.</p>
@@ -342,7 +341,8 @@
 
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-primary mb-3"" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-primary mb-3"" data-aos=" fade-up"
+            data-aos-delay="100">
             <div class="member">
               <div class="member-img">
                 <img src="assets/img/team/ArletteHero.jpg" class="img-fluid" alt="">
@@ -350,12 +350,13 @@
               </div>
               <div class="member-info">
                 <h4>Arlette Varela</h4>
-                <span>Alias: Arlette</span>
+                <span>Alias: Arlette...</span>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-secondary mb-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-secondary mb-3" data-aos="fade-up"
+            data-aos-delay="200">
             <div class="member">
               <div class="member-img">
                 <img src="assets/img/team/Anthony.png" class="img-fluid" alt="">
@@ -367,19 +368,21 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-success mb-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-success mb-3" data-aos="fade-up"
+            data-aos-delay="300">
             <div class="member">
               <div class="member-img">
                 <img src="assets/img/team/XanHero.jpg" class="img-fluid" alt="">
               </div>
               <div class="member-info">
                 <h4>Alexandra Taft</h4>
-                <span>Alias: Toad </span>
+                <span>Alias: X </span>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-danger mb-3" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch card text-white bg-danger mb-3" data-aos="fade-up"
+            data-aos-delay="400">
             <div class="member">
               <div class="member-img">
                 <img src="assets/img/team/NathanHero.jpg" class="img-fluid" alt="">
