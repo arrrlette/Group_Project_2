@@ -19,5 +19,6 @@ Battle Royale: Select two characters to battle to determine a winner.
 LANDING PAGE
 The website is a one page site with a navigation bar that will navigate the user to each section.
 
-![Fantasy](Images/Fantasy.png)
+
+
 ![Landing_Page](assets/img/superhero_db/landing_page.jpg)
